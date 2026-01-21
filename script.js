@@ -111,3 +111,4 @@ function initSignature(id) {
 }
 
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0, 0, 400, 200); }
+// End of file: script.js
