@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ETF | Portail Activité</title>
+    <title>ETF Dashboard | Suivi d'Activité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -13,56 +13,51 @@
 <body>
 
 <div id="setup-screen" class="no-print">
-    <header class="app-header">
-        <img src="ETFlogo.png" alt="Logo ETF" class="header-logo">
-        <div class="user-status"><i class="fa-solid fa-circle-check"></i> Système Opérationnel</div>
-    </header>
-
-    <main class="setup-content">
-        <div class="welcome-text">
-            <h1>Bienvenue sur votre portail</h1>
-            <p>Sélectionnez le document à compléter pour commencer.</p>
-        </div>
-
-        <div class="doc-grid">
-            <div class="doc-card" onclick="selectDoc('RIMA_TR', this)">
-                <div class="icon-box blue"><i class="fa-solid fa-utensils"></i></div>
-                <h3>RIMA - TR</h3>
-                <p>Tickets Restaurant</p>
-            </div>
-            <div class="doc-card" onclick="selectDoc('RIMA_IGD', this)">
-                <div class="icon-box orange"><i class="fa-solid fa-bed"></i></div>
-                <h3>RIMA - IGD</h3>
-                <p>Indemnité Grand Déplacement</p>
-            </div>
-            <div class="doc-card" onclick="selectDoc('RIMA_ELO', this)">
-                <div class="icon-box green"><i class="fa-solid fa-route"></i></div>
-                <h3>RIMA - ELO</h3>
-                <p>Éloignement / Trajet</p>
-            </div>
-            <div class="doc-card" onclick="selectDoc('DHAM', this)">
-                <div class="icon-box purple"><i class="fa-solid fa-stopwatch"></i></div>
-                <h3>DHAM</h3>
-                <p>Suivi des Heures (35h)</p>
-            </div>
-        </div>
-
-        <div class="selection-footer">
-            <div class="date-inputs">
-                <div class="field-group">
-                    <label>Mois</label>
-                    <select id="monthSelect"></select>
-                </div>
-                <div class="field-group">
-                    <label>Année</label>
-                    <input type="number" id="yearInput" value="2026">
+    <div class="dashboard-home">
+        <div class="welcome-sidebar">
+            <div class="sidebar-content">
+                <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
+                <h1>Bonjour,</h1>
+                <p>Bienvenue sur votre portail de gestion d'activité. Sélectionnez vos paramètres pour éditer votre rapport mensuel.</p>
+                <div class="sidebar-footer">
+                    <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système opérationnel</div>
                 </div>
             </div>
-            <button id="mainLaunchBtn" onclick="generateDocument()" class="btn-generate disabled" disabled>
-                Initialiser le document <i class="fa-solid fa-chevron-right"></i>
-            </button>
         </div>
-    </main>
+
+        <div class="config-panel">
+            <div class="config-card">
+                <h2>Configuration du document</h2>
+                
+                <div class="input-section">
+                    <label>Quel modèle souhaitez-vous remplir ?</label>
+                    <div class="doc-options">
+                        <select id="docType" class="main-select">
+                            <option value="RIMA_TR">RIMA - Tickets Restaurant</option>
+                            <option value="RIMA_ELO">RIMA - Éloignement</option>
+                            <option value="RIMA_IGD">RIMA - IGD</option>
+                            <option value="DHAM">DHAM - Suivi des Heures (35h)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="date-grid">
+                    <div class="input-section">
+                        <label>Mois de référence</label>
+                        <select id="monthSelect" class="sub-select"></select>
+                    </div>
+                    <div class="input-section">
+                        <label>Année</label>
+                        <input type="number" id="yearInput" value="2026" class="sub-input">
+                    </div>
+                </div>
+
+                <button onclick="generateDocument()" class="btn-generate-main">
+                    Lancer la saisie <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="document-container" style="display:none;">
@@ -110,7 +105,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
+            <textarea placeholder="Saisissez ici vos commentaires..."></textarea>
         </div>
     </div>
 
@@ -118,21 +113,21 @@
         <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du salarié :</strong></p>
-            <canvas id="canvas-emp" width="300" height="80"></canvas>
+            <canvas id="canvas-emp" width="350" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
         </div>
         <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du Responsable Hiérarchique :</strong></p>
-            <canvas id="canvas-mgr" width="300" height="80"></canvas>
+            <canvas id="canvas-mgr" width="350" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
         </div>
     </div>
 
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
-        <button onclick="toggleFullScreen()" class="btn-fullscreen"><i class="fa-solid fa-maximize"></i> Plein Écran</button>
-        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Retour</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Exporter PDF</button>
+        <button onclick="toggleFullScreen()" class="btn-fullscreen"><i class="fa-solid fa-expand"></i> Plein Écran</button>
+        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
     </div>
 </div>
 
