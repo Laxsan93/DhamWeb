@@ -1,7 +1,6 @@
 {
   "name": "ETF Suivi d'Activité",
   "short_name": "ETF Suivi",
-  "description": "Application de saisie des rapports mensuels ETF",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
