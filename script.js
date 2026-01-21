@@ -3,9 +3,7 @@ const codesPart1 = { "P": "Présence", "TT": "Télétravail", "CP": "Congés pay
 const codesPart2 = { "AA": "Absence autorisée", "ANA": "Absence non autorisée", "N": "Nuits travaillées", "Demi P": "Demi-journée", "FORM": "Formation", "SCO": "Ecole", "JF": "Jour férié" };
 
 const mSelect = document.getElementById('monthSelect');
-if(mSelect) {
-    months.forEach((m, i) => { mSelect.innerHTML += `<option value="${i}">${m}</option>`; });
-}
+months.forEach((m, i) => { mSelect.innerHTML += `<option value="${i}">${m}</option>`; });
 
 function generateDocument() {
     const month = parseInt(document.getElementById('monthSelect').value);
@@ -33,7 +31,7 @@ function renderCalendar(year, month, type) {
     for (let w = 0; w < 6; w++) {
         if (currentDay > daysInMonth) break;
         let table = document.createElement('table');
-        let html = `<tr><th style="width:160px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Hebdo.</th></tr>`;
+        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Hebdo.</th></tr>`;
         let rDate = `<tr class="date-header"><td class="row-label">Date</td>`;
         let rCode = `<tr><td class="row-label">(1) Codes</td>`;
         let rVal = `<tr><td class="row-label">${labels.v}</td>`;
@@ -82,7 +80,6 @@ function sumWeek(w) {
 
 function initRecapTables() {
     const b1 = document.getElementById('recap-body-1'); const b2 = document.getElementById('recap-body-2');
-    if(!b1 || !b2) return;
     b1.innerHTML = ""; b2.innerHTML = "";
     for (let c in codesPart1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td style="text-align:left; padding-left:10px">${codesPart1[c]}</td><td id="count-${c}">0</td></tr>`;
     for (let c in codesPart2) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td style="text-align:left; padding-left:10px">${codesPart2[c]}</td><td id="count-${c}">0</td></tr>`;
@@ -98,8 +95,7 @@ function updateRecaps() {
 }
 
 function initSignature(id) {
-    const canvas = document.getElementById(id); if(!canvas) return;
-    const ctx = canvas.getContext('2d'); ctx.lineWidth = 2; let paint = false;
+    const canvas = document.getElementById(id); const ctx = canvas.getContext('2d'); ctx.lineWidth = 2; let paint = false;
     const getPos = (e) => { const rect = canvas.getBoundingClientRect(); const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0); const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0); return { x: cx - rect.left, y: cy - rect.top }; };
     canvas.addEventListener('mousedown', (e) => { paint = true; ctx.beginPath(); let p = getPos(e); ctx.moveTo(p.x, p.y); });
     canvas.addEventListener('mousemove', (e) => { if(!paint) return; let p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); });
@@ -109,8 +105,3 @@ function initSignature(id) {
 }
 
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0, 0, 400, 200); }
-
-function toggleFullScreen() {
-    if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); } 
-    else { if (document.exitFullscreen) { document.exitFullscreen(); } }
-}
