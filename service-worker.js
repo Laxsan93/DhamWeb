@@ -1,4 +1,4 @@
-const CACHE_NAME = 'etf-v1.2'; // Changer le numéro ici force le nettoyage
+const CACHE_NAME = 'etf-cache-v1.3'; // Changer ici vide le cache navigateur
 const ASSETS = [
   'index.html',
   'style.css',
@@ -8,7 +8,6 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  // Force l'installation immédiate
   self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS))
@@ -16,7 +15,6 @@ self.addEventListener('install', (e) => {
 });
 
 self.addEventListener('activate', (e) => {
-  // Supprime les anciens caches dès l'activation
   e.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ETF Suivi d'Activité</title>
-    <link rel="stylesheet" href="style.css?v=1.2">
+    <title>ETF Portail Activité</title>
+    <link rel="stylesheet" href="style.css?v=1.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
@@ -16,10 +16,12 @@
     <div class="dashboard-home">
         <div class="welcome-sidebar">
             <div class="sidebar-content">
-                <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
+                <div class="logo-wrapper">
+                    <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
+                </div>
                 <h1>Bonjour,</h1>
-                <p>Votre portail de gestion d'activité est prêt. Configurez votre rapport mensuel ci-contre.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour (v1.2)</div>
+                <p>Votre portail de gestion d'activité est prêt. Configurez votre rapport mensuel pour commencer la saisie.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.3</div>
             </div>
         </div>
 
@@ -119,13 +121,12 @@
 
     <div class="actions no-print">
         <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer en PDF</button>
-        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Retour</button>
+        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
     </div>
 </div>
 
-<script src="script.js?v=1.2"></script>
+<script src="script.js?v=1.3"></script>
 <script>
-  // Script d'enregistrement du Service Worker avec force-update
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('service-worker.js').then(reg => {
@@ -133,7 +134,6 @@
           const installingWorker = reg.installing;
           installingWorker.onstatechange = () => {
             if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Nouvelle version détectée, on recharge la page automatiquement
               window.location.reload();
             }
           };
