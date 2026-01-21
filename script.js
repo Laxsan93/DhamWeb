@@ -48,8 +48,11 @@ function renderCalendar(year, month, type) {
                 let allCodes = {...codesPart1, ...codesPart2};
                 rDate += `<td class="${isWE?'weekend':''}">${id} ${months[month].substring(0,3)}</td>`;
                 rCode += `<td class="${isWE?'weekend':''}"><select class="code-select" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
-                if (type === 'DHAM') { rVal += `<td class="${isWE?'weekend':''}"><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w})"></td>`; }
-                else { rVal += `<td id="v-${id}" class="${isWE?'weekend':''}">0</td>`; }
+                if (type === 'DHAM') { 
+                    rVal += `<td class="${isWE?'weekend':''}"><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w})"></td>`; 
+                } else { 
+                    rVal += `<td id="v-${id}" class="${isWE?'weekend':''}">0</td>`; 
+                }
                 rExtra += `<td id="e-${id}" class="${isWE?'weekend':''}">0</td>`;
                 currentDay++;
             }
@@ -65,8 +68,12 @@ function handleUpdate(type, id, w) {
     if (code === "P" || code === "TT") { v = (type === 'DHAM' ? 9 : 1); e = 1; }
     else if (code === "JF") { v = (type === 'DHAM' ? 9 : 1); }
     else if (["CP", "RTT", "M"].includes(code)) { v = (type === 'DHAM' ? 0 : 1); }
-    if (type !== 'DHAM') { if(document.getElementById(`v-${id}`)) document.getElementById(`v-${id}`).innerText = v; }
-    else { if(document.getElementById(`v-${id}`) && v > 0) document.getElementById(`v-${id}`).value = v; } 
+    
+    if (type !== 'DHAM') { 
+        if(document.getElementById(`v-${id}`)) document.getElementById(`v-${id}`).innerText = v; 
+    } else { 
+        if(document.getElementById(`v-${id}`) && v > 0) document.getElementById(`v-${id}`).value = v; 
+    } 
     if(document.getElementById(`e-${id}`)) document.getElementById(`e-${id}`).innerText = e;
     sumWeek(w); updateRecaps();
 }
@@ -75,7 +82,10 @@ function sumWeek(w) {
     const tables = document.querySelectorAll('table:not(.recap-half)');
     let sv = 0, se = 0;
     if(tables[w]) {
-        tables[w].querySelectorAll(`[id^='v-']`).forEach(el => { let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText); sv += val || 0; });
+        tables[w].querySelectorAll(`[id^='v-']`).forEach(el => {
+            let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText);
+            sv += val || 0;
+        });
         tables[w].querySelectorAll(`[id^='e-']`).forEach(td => se += parseFloat(td.innerText) || 0);
         if(document.getElementById(`tv-w${w}`)) document.getElementById(`tv-w${w}`).innerText = sv;
         if(document.getElementById(`te-w${w}`)) document.getElementById(`te-w${w}`).innerText = se;
@@ -102,7 +112,12 @@ function updateRecaps() {
 function initSignature(id) {
     const canvas = document.getElementById(id); if(!canvas) return;
     const ctx = canvas.getContext('2d'); ctx.lineWidth = 2; let paint = false;
-    const getPos = (e) => { const rect = canvas.getBoundingClientRect(); const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0); const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0); return { x: cx - rect.left, y: cy - rect.top }; };
+    const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        return { x: cx - rect.left, y: cy - rect.top };
+    };
     canvas.addEventListener('mousedown', (e) => { paint = true; ctx.beginPath(); let p = getPos(e); ctx.moveTo(p.x, p.y); });
     canvas.addEventListener('mousemove', (e) => { if(!paint) return; let p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); });
     window.addEventListener('mouseup', () => paint = false);

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'etf-cache-v1.3'; // Changer ici vide le cache navigateur
+const CACHE_NAME = 'etf-cache-v1.4'; // On change de version ici
 const ASSETS = [
   'index.html',
   'style.css',
