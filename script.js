@@ -17,6 +17,7 @@ function generateDocument() {
     document.getElementById('setup-screen').style.display = 'none';
     document.getElementById('document-container').style.display = 'block';
     document.getElementById('monthYearHeader').innerText = `${months[month]} ${year}`;
+    
     if(type.includes("DHAM")) document.getElementById('docHeaderTitle').innerText = "DHAM - SUIVI DES HEURES DE TRAVAIL";
 
     renderCalendar(year, month, type);
@@ -28,8 +29,9 @@ function generateDocument() {
 function renderCalendar(year, month, type) {
     const container = document.getElementById('weeks-container');
     container.innerHTML = "";
+    
     let firstDay = new Date(year, month, 1);
-    let dayOffset = firstDay.getDay() || 7; // 1 (Lun) à 7 (Dim)
+    let dayOffset = firstDay.getDay() || 7; // Correction : 1 (Lun) à 7 (Dim)
     let currentDay = 1;
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -42,7 +44,7 @@ function renderCalendar(year, month, type) {
         if (currentDay > daysInMonth) break;
         
         let table = document.createElement('table');
-        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Hebdo.</th></tr>`;
+        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Total</th></tr>`;
         let rDate = `<tr class="date-header"><td class="row-label">Date</td>`;
         let rCode = `<tr><td class="row-label">(1) Codes</td>`;
         let rVal = `<tr><td class="row-label">${labels.v}</td>`;
@@ -73,7 +75,8 @@ function renderCalendar(year, month, type) {
                 currentDay++;
             }
         }
-        table.innerHTML = html + rDate + `<td class="total-col">Total</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}" class="total-col">0</td></tr>` + rExtra + `<td id="te-w${w}" class="total-col">0</td></tr>`;
+        // Ajout colonne Total Hebdo alignée
+        table.innerHTML = html + rDate + `<td class="total-col">Hebdo.</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}" class="total-col">0</td></tr>` + rExtra + `<td id="te-w${w}" class="total-col">0</td></tr>`;
         container.appendChild(table);
     }
 }
@@ -128,7 +131,9 @@ function initSignature(id) {
     let paint = false;
     const getPos = (e) => {
         const rect = canvas.getBoundingClientRect();
-        return { x: (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left, y: (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top };
+        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        return { x: clientX - rect.left, y: clientY - rect.top };
     };
     const start = (e) => { paint = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
     const move = (e) => { if(!paint) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); };

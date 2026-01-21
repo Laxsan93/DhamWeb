@@ -33,23 +33,24 @@
 </div>
 
 <div id="document-container" style="display:none;">
-    <div class="header-doc">
-        <div class="logo-box">
-            <img src="ETFlogo.png" alt="ETF" id="etf-logo">
+    <div class="header-main">
+        <div class="logo-area">
+            <img src="ETFlogo.png" alt="ETF Logo" id="etf-logo">
         </div>
-        <div class="title-box">
+        <div class="title-area">
             <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
             <p id="monthYearHeader" class="highlight-date"></p>
         </div>
-        <div class="info-box">
-            <div class="info-row">
-                <div class="field"><span>Nom :</span><input type="text"></div>
-                <div class="field"><span>Service :</span><input type="text"></div>
-            </div>
-            <div class="info-row">
-                <div class="field"><span>Prénom :</span><input type="text"></div>
-                <div class="field"><span>Matricule :</span><input type="text"></div>
-            </div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-row">
+            <div class="field"><span>Nom :</span><input type="text"></div>
+            <div class="field"><span>Service :</span><input type="text"></div>
+        </div>
+        <div class="info-row">
+            <div class="field"><span>Prénom :</span><input type="text"></div>
+            <div class="field"><span>Matricule :</span><input type="text"></div>
         </div>
     </div>
 
@@ -65,12 +66,12 @@
 
     <div id="weeks-container"></div>
 
-    <div class="footer-grid">
-        <div class="obs-container">
+    <div class="bottom-flex">
+        <div class="obs-box">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Indiquez ici vos dates de formation ou commentaires particuliers..."></textarea>
+            <textarea placeholder="Formations, commentaires..."></textarea>
         </div>
-        <div class="recap-container">
+        <div class="recap-box">
             <table id="recap-table">
                 <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
                 <tbody id="recap-body"></tbody>
@@ -79,22 +80,22 @@
     </div>
 
     <div class="signature-grid">
-        <div class="sig-box">
+        <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du salarié :</strong></p>
-            <canvas id="canvas-emp" width="300" height="90"></canvas>
+            <canvas id="canvas-emp" width="280" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
         </div>
-        <div class="sig-box">
+        <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du Responsable Hiérarchique :</strong></p>
-            <canvas id="canvas-mgr" width="300" height="90"></canvas>
+            <canvas id="canvas-mgr" width="280" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
         </div>
     </div>
 
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print">Imprimer / Sauvegarder en PDF</button>
+        <button onclick="window.print()" class="btn-print">Imprimer / PDF</button>
         <button onclick="location.reload()" class="btn-back">Retour</button>
     </div>
 </div>
