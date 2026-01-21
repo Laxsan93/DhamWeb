@@ -66,16 +66,20 @@
 
     <div id="weeks-container"></div>
 
-    <div class="bottom-flex">
-        <div class="obs-box">
+    <div class="recap-section">
+        <div class="recap-tables-wrapper">
+            <table class="recap-half">
+                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+                <tbody id="recap-body-1"></tbody>
+            </table>
+            <table class="recap-half">
+                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+                <tbody id="recap-body-2"></tbody>
+            </table>
+        </div>
+        <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
             <textarea placeholder="Formations, commentaires..."></textarea>
-        </div>
-        <div class="recap-box">
-            <table id="recap-table">
-                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-                <tbody id="recap-body"></tbody>
-            </table>
         </div>
     </div>
 
@@ -83,13 +87,13 @@
         <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du salarié :</strong></p>
-            <canvas id="canvas-emp" width="280" height="90"></canvas>
+            <canvas id="canvas-emp" width="300" height="80"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
         </div>
         <div class="sig-card">
             <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du Responsable Hiérarchique :</strong></p>
-            <canvas id="canvas-mgr" width="280" height="90"></canvas>
+            <canvas id="canvas-mgr" width="300" height="80"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
         </div>
     </div>

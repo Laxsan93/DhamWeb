@@ -1,13 +1,16 @@
 const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-const allCodes = {
+// On sépare les codes en deux colonnes de 7
+const codesPart1 = {
     "P": "Présence", "TT": "Télétravail", "CP": "Congés payés", "RTT": "RTT", 
-    "M": "Maladie", "AT/MP": "Accident Travail", "EV": "Événement familial", 
+    "M": "Maladie", "AT/MP": "Accident Travail", "EV": "Événement familial"
+};
+const codesPart2 = {
     "AA": "Absence autorisée", "ANA": "Absence non autorisée", "N": "Nuits travaillées", 
     "Demi P": "Demi-journée", "FORM": "Formation", "SCO": "Ecole", "JF": "Jour férié"
 };
 
-const monthSelect = document.getElementById('monthSelect');
-months.forEach((m, i) => { monthSelect.innerHTML += `<option value="${i}">${m}</option>`; });
+const mSelect = document.getElementById('monthSelect');
+months.forEach((m, i) => { mSelect.innerHTML += `<option value="${i}">${m}</option>`; });
 
 function generateDocument() {
     const month = parseInt(document.getElementById('monthSelect').value);
@@ -21,7 +24,7 @@ function generateDocument() {
     if(type.includes("DHAM")) document.getElementById('docHeaderTitle').innerText = "DHAM - SUIVI DES HEURES DE TRAVAIL";
 
     renderCalendar(year, month, type);
-    initRecapTable();
+    initRecapTables();
     initSignature('canvas-emp');
     initSignature('canvas-mgr');
 }
@@ -29,9 +32,8 @@ function generateDocument() {
 function renderCalendar(year, month, type) {
     const container = document.getElementById('weeks-container');
     container.innerHTML = "";
-    
     let firstDay = new Date(year, month, 1);
-    let dayOffset = firstDay.getDay() || 7; // Correction : 1 (Lun) à 7 (Dim)
+    let dayOffset = firstDay.getDay() || 7; 
     let currentDay = 1;
     let daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -42,9 +44,8 @@ function renderCalendar(year, month, type) {
 
     for (let w = 0; w < 6; w++) {
         if (currentDay > daysInMonth) break;
-        
         let table = document.createElement('table');
-        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Total</th></tr>`;
+        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th class="total-col">Hebdo.</th></tr>`;
         let rDate = `<tr class="date-header"><td class="row-label">Date</td>`;
         let rCode = `<tr><td class="row-label">(1) Codes</td>`;
         let rVal = `<tr><td class="row-label">${labels.v}</td>`;
@@ -59,24 +60,22 @@ function renderCalendar(year, month, type) {
             } else {
                 let id = currentDay;
                 let isWE = d >= 6;
+                let allCodes = {...codesPart1, ...codesPart2};
                 rDate += `<td class="${isWE?'weekend':''}">${id} ${months[month].substring(0,3)}</td>`;
                 rCode += `<td class="${isWE?'weekend':''}">
                     <select class="code-select" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})">
                         <option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}
                     </select></td>`;
-                
                 if (type === 'DHAM') {
                     rVal += `<td class="${isWE?'weekend':''}"><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w})"></td>`;
                 } else {
                     rVal += `<td id="v-${id}" class="${isWE?'weekend':''}">0</td>`;
                 }
-                
                 rExtra += `<td id="e-${id}" class="${isWE?'weekend':''}">0</td>`;
                 currentDay++;
             }
         }
-        // Ajout colonne Total Hebdo alignée
-        table.innerHTML = html + rDate + `<td class="total-col">Hebdo.</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}" class="total-col">0</td></tr>` + rExtra + `<td id="te-w${w}" class="total-col">0</td></tr>`;
+        table.innerHTML = html + rDate + `<td class="total-col">Total</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}" class="total-col">0</td></tr>` + rExtra + `<td id="te-w${w}" class="total-col">0</td></tr>`;
         container.appendChild(table);
     }
 }
@@ -84,7 +83,6 @@ function renderCalendar(year, month, type) {
 function handleUpdate(type, id, w) {
     const code = document.querySelector(`select[data-day="${id}"]`).value;
     let v = 0; let e = 0;
-
     if (code === "P" || code === "TT") { v = (type === 'DHAM' ? 9 : 1); e = 1; }
     else if (code === "JF") { v = (type === 'DHAM' ? 9 : 1); }
     else if (["CP", "RTT", "M"].includes(code)) { v = (type === 'DHAM' ? 0 : 1); }
@@ -94,11 +92,11 @@ function handleUpdate(type, id, w) {
 
     document.getElementById(`e-${id}`).innerText = e;
     sumWeek(w);
-    updateRecap();
+    updateRecaps();
 }
 
 function sumWeek(w) {
-    const tables = document.querySelectorAll('table:not(#recap-table)');
+    const tables = document.querySelectorAll('table:not(.recap-half)');
     let sv = 0, se = 0;
     tables[w].querySelectorAll(`[id^='v-']`).forEach(el => {
         let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText);
@@ -109,19 +107,21 @@ function sumWeek(w) {
     document.getElementById(`te-w${w}`).innerText = se;
 }
 
-function initRecapTable() {
-    const body = document.getElementById('recap-body');
-    body.innerHTML = "";
-    for (let c in allCodes) {
-        body.innerHTML += `<tr><td><strong>${c}</strong></td><td style="text-align:left; padding-left:10px">${allCodes[c]}</td><td id="count-${c}">0</td></tr>`;
-    }
+function initRecapTables() {
+    const b1 = document.getElementById('recap-body-1');
+    const b2 = document.getElementById('recap-body-2');
+    b1.innerHTML = ""; b2.innerHTML = "";
+    for (let c in codesPart1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td style="text-align:left; padding-left:10px">${codesPart1[c]}</td><td id="count-${c}">0</td></tr>`;
+    for (let c in codesPart2) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td style="text-align:left; padding-left:10px">${codesPart2[c]}</td><td id="count-${c}">0</td></tr>`;
 }
 
-function updateRecap() {
+function updateRecaps() {
+    const allCodes = {...codesPart1, ...codesPart2};
     for (let c in allCodes) {
         let count = 0;
         document.querySelectorAll('.code-select').forEach(s => { if(s.value === c) count++; });
-        document.getElementById(`count-${c}`).innerText = count;
+        const el = document.getElementById(`count-${c}`);
+        if(el) el.innerText = count;
     }
 }
 
@@ -131,19 +131,15 @@ function initSignature(id) {
     let paint = false;
     const getPos = (e) => {
         const rect = canvas.getBoundingClientRect();
-        const clientX = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-        const clientY = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-        return { x: clientX - rect.left, y: clientY - rect.top };
+        const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        return { x: cx - rect.left, y: cy - rect.top };
     };
-    const start = (e) => { paint = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); };
-    const move = (e) => { if(!paint) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); };
-    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mousedown', (e) => { paint = true; ctx.beginPath(); let p = getPos(e); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', (e) => { if(!paint) return; let p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); });
     window.addEventListener('mouseup', () => paint = false);
-    canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', move);
-    canvas.addEventListener('touchend', () => paint = false);
+    canvas.addEventListener('touchstart', (e) => { paint = true; ctx.beginPath(); let p = getPos(e); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('touchmove', (e) => { if(!paint) return; let p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); });
 }
 
-function clearCanvas(id) {
-    const c = document.getElementById(id);
-    c.getContext('2d').clearRect(0, 0, c.width, c.height);
-}
+function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0, 0, 300, 100); }
