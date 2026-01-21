@@ -11,12 +11,10 @@ function generateDocument() {
     const month = parseInt(document.getElementById('monthSelect').value);
     const year = parseInt(document.getElementById('yearInput').value);
     const type = document.getElementById('docType').value;
-
     document.getElementById('setup-screen').style.display = 'none';
     document.getElementById('document-container').style.display = 'block';
     document.getElementById('monthYearHeader').innerText = `${months[month]} ${year}`;
     if(type.includes("DHAM")) document.getElementById('docHeaderTitle').innerText = "DHAM - SUIVI DES HEURES DE TRAVAIL";
-
     renderCalendar(year, month, type);
     initRecapTables();
     initSignature('canvas-emp');
@@ -67,19 +65,21 @@ function handleUpdate(type, id, w) {
     if (code === "P" || code === "TT") { v = (type === 'DHAM' ? 9 : 1); e = 1; }
     else if (code === "JF") { v = (type === 'DHAM' ? 9 : 1); }
     else if (["CP", "RTT", "M"].includes(code)) { v = (type === 'DHAM' ? 0 : 1); }
-    if (type !== 'DHAM') { document.getElementById(`v-${id}`).innerText = v; }
-    else { if(v > 0) document.getElementById(`v-${id}`).value = v; } 
-    document.getElementById(`e-${id}`).innerText = e;
+    if (type !== 'DHAM') { if(document.getElementById(`v-${id}`)) document.getElementById(`v-${id}`).innerText = v; }
+    else { if(document.getElementById(`v-${id}`) && v > 0) document.getElementById(`v-${id}`).value = v; } 
+    if(document.getElementById(`e-${id}`)) document.getElementById(`e-${id}`).innerText = e;
     sumWeek(w); updateRecaps();
 }
 
 function sumWeek(w) {
     const tables = document.querySelectorAll('table:not(.recap-half)');
     let sv = 0, se = 0;
-    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => { let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText); sv += val || 0; });
-    tables[w].querySelectorAll(`[id^='e-']`).forEach(td => se += parseFloat(td.innerText) || 0);
-    document.getElementById(`tv-w${w}`).innerText = sv;
-    document.getElementById(`te-w${w}`).innerText = se;
+    if(tables[w]) {
+        tables[w].querySelectorAll(`[id^='v-']`).forEach(el => { let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText); sv += val || 0; });
+        tables[w].querySelectorAll(`[id^='e-']`).forEach(td => se += parseFloat(td.innerText) || 0);
+        if(document.getElementById(`tv-w${w}`)) document.getElementById(`tv-w${w}`).innerText = sv;
+        if(document.getElementById(`te-w${w}`)) document.getElementById(`te-w${w}`).innerText = se;
+    }
 }
 
 function initRecapTables() {
@@ -111,4 +111,3 @@ function initSignature(id) {
 }
 
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0, 0, 400, 200); }
-// End of file: script.js

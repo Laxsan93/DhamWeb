@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail Activité ETF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ETF Suivi d'Activité</title>
+    <link rel="stylesheet" href="style.css?v=1.2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -18,16 +18,14 @@
             <div class="sidebar-content">
                 <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
                 <h1>Bonjour,</h1>
-                <p>Bienvenue sur votre portail de gestion d'activité. Sélectionnez vos paramètres pour éditer votre rapport mensuel.</p>
-                <div class="sidebar-footer">
-                    <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système opérationnel</div>
-                </div>
+                <p>Votre portail de gestion d'activité est prêt. Configurez votre rapport mensuel ci-contre.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour (v1.2)</div>
             </div>
         </div>
 
         <div class="config-panel">
             <div class="config-card">
-                <h2>Configuration du document</h2>
+                <h2>Nouveau document</h2>
                 <div class="input-section">
                     <label>Modèle de document</label>
                     <select id="docType" class="main-select">
@@ -48,7 +46,7 @@
                     </div>
                 </div>
                 <button onclick="generateDocument()" class="btn-generate-main">
-                    Lancer la saisie <i class="fa-solid fa-chevron-right"></i>
+                    Ouvrir le formulaire <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
         </div>
@@ -100,7 +98,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Saisissez ici vos commentaires..."></textarea>
+            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
         </div>
     </div>
 
@@ -120,17 +118,29 @@
     </div>
 
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
-        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer en PDF</button>
+        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Retour</button>
     </div>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=1.2"></script>
 <script>
+  // Script d'enregistrement du Service Worker avec force-update
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').then(reg => {
+        reg.onupdatefound = () => {
+          const installingWorker = reg.installing;
+          installingWorker.onstatechange = () => {
+            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Nouvelle version détectée, on recharge la page automatiquement
+              window.location.reload();
+            }
+          };
+        };
+      });
+    });
   }
 </script>
 </body>
 </html>
-
