@@ -2,13 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Suivi d'activité ETF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETF Suivi d'Activité</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e40af">
+    <link rel="apple-touch-icon" href="ETFlogo.png">
 </head>
 <body>
 
 <div id="setup-screen" class="no-print">
     <div class="card">
+        <img src="ETFlogo.png" alt="ETF" style="max-width: 80px; margin-bottom: 20px;">
         <h1>Générateur de Rapport ETF</h1>
         <div class="form-row">
             <div class="group">
@@ -34,9 +39,7 @@
 
 <div id="document-container" style="display:none;">
     <div class="header-main">
-        <div class="logo-area">
-            <img src="ETFlogo.png" alt="ETF Logo" id="etf-logo">
-        </div>
+        <div class="logo-area"><img src="ETFlogo.png" alt="ETF Logo" id="etf-logo"></div>
         <div class="title-area">
             <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
             <p id="monthYearHeader" class="highlight-date"></p>
@@ -79,7 +82,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Formations, commentaires..."></textarea>
+            <textarea placeholder="Indiquez ici vos dates de formation ou commentaires..."></textarea>
         </div>
     </div>
 
@@ -105,5 +108,10 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
+  }
+</script>
 </body>
 </html>
