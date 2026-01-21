@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Portail Activité ETF</title>
+    <title>ETF | Portail Activité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -13,48 +13,56 @@
 <body>
 
 <div id="setup-screen" class="no-print">
-    <div class="hero-container">
-        <div class="glass-card">
-            <div class="glass-header">
-                <img src="ETFlogo.png" alt="ETF" class="hero-logo">
-                <div class="hero-text">
-                    <h1>Portail Activité</h1>
-                    <p>Saisie et suivi des temps de travail</p>
-                </div>
+    <header class="app-header">
+        <img src="ETFlogo.png" alt="Logo ETF" class="header-logo">
+        <div class="user-status"><i class="fa-solid fa-circle-check"></i> Système Opérationnel</div>
+    </header>
+
+    <main class="setup-content">
+        <div class="welcome-text">
+            <h1>Bienvenue sur votre portail</h1>
+            <p>Sélectionnez le document à compléter pour commencer.</p>
+        </div>
+
+        <div class="doc-grid">
+            <div class="doc-card" onclick="selectDoc('RIMA_TR', this)">
+                <div class="icon-box blue"><i class="fa-solid fa-utensils"></i></div>
+                <h3>RIMA - TR</h3>
+                <p>Tickets Restaurant</p>
             </div>
-
-            <div class="hero-body">
-                <div class="input-block">
-                    <label><i class="fa-solid fa-layer-group"></i> Modèle de document</label>
-                    <select id="docType">
-                        <option value="RIMA_TR">RIMA - Tickets Restaurant</option>
-                        <option value="RIMA_ELO">RIMA - Éloignement</option>
-                        <option value="RIMA_IGD">RIMA - IGD</option>
-                        <option value="DHAM">DHAM - Suivi des Heures</option>
-                    </select>
-                </div>
-
-                <div class="inline-group">
-                    <div class="input-block">
-                        <label><i class="fa-solid fa-calendar"></i> Mois</label>
-                        <select id="monthSelect"></select>
-                    </div>
-                    <div class="input-block">
-                        <label><i class="fa-solid fa-hashtag"></i> Année</label>
-                        <input type="number" id="yearInput" value="2026">
-                    </div>
-                </div>
-
-                <button onclick="generateDocument()" class="btn-primary-launch">
-                    Générer le formulaire <i class="fa-solid fa-arrow-right-long"></i>
-                </button>
+            <div class="doc-card" onclick="selectDoc('RIMA_IGD', this)">
+                <div class="icon-box orange"><i class="fa-solid fa-bed"></i></div>
+                <h3>RIMA - IGD</h3>
+                <p>Indemnité Grand Déplacement</p>
             </div>
-
-            <div class="hero-footer">
-                <span><i class="fa-solid fa-lock"></i> Plateforme certifiée ETF</span>
+            <div class="doc-card" onclick="selectDoc('RIMA_ELO', this)">
+                <div class="icon-box green"><i class="fa-solid fa-route"></i></div>
+                <h3>RIMA - ELO</h3>
+                <p>Éloignement / Trajet</p>
+            </div>
+            <div class="doc-card" onclick="selectDoc('DHAM', this)">
+                <div class="icon-box purple"><i class="fa-solid fa-stopwatch"></i></div>
+                <h3>DHAM</h3>
+                <p>Suivi des Heures (35h)</p>
             </div>
         </div>
-    </div>
+
+        <div class="selection-footer">
+            <div class="date-inputs">
+                <div class="field-group">
+                    <label>Mois</label>
+                    <select id="monthSelect"></select>
+                </div>
+                <div class="field-group">
+                    <label>Année</label>
+                    <input type="number" id="yearInput" value="2026">
+                </div>
+            </div>
+            <button id="mainLaunchBtn" onclick="generateDocument()" class="btn-generate disabled" disabled>
+                Initialiser le document <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
 </div>
 
 <div id="document-container" style="display:none;">
@@ -102,7 +110,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Formations, commentaires..."></textarea>
+            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
         </div>
     </div>
 
@@ -124,7 +132,7 @@
     <div class="actions no-print">
         <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
         <button onclick="toggleFullScreen()" class="btn-fullscreen"><i class="fa-solid fa-maximize"></i> Plein Écran</button>
-        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-rotate-left"></i> Retour</button>
+        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Retour</button>
     </div>
 </div>
 
