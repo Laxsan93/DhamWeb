@@ -50,9 +50,15 @@ function renderCalendar(year, month, type) {
                 let isWE = d >= 6;
                 let allCodes = {...codesPart1, ...codesPart2};
                 rDate += `<td class="${isWE?'weekend':''}">${id} ${months[month].substring(0,3)}</td>`;
-                rCode += `<td class="${isWE?'weekend':''}"><select class="code-select" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
-                if (type === 'DHAM') { rVal += `<td class="${isWE?'weekend':''}"><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w})"></td>`; }
-                else { rVal += `<td id="v-${id}" class="${isWE?'weekend':''}">0</td>`; }
+                rCode += `<td class="${isWE?'weekend':''}">
+                    <select class="code-select" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})">
+                        <option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}
+                    </select></td>`;
+                if (type === 'DHAM') {
+                    rVal += `<td class="${isWE?'weekend':''}"><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w})"></td>`;
+                } else {
+                    rVal += `<td id="v-${id}" class="${isWE?'weekend':''}">0</td>`;
+                }
                 rExtra += `<td id="e-${id}" class="${isWE?'weekend':''}">0</td>`;
                 currentDay++;
             }
@@ -77,7 +83,10 @@ function handleUpdate(type, id, w) {
 function sumWeek(w) {
     const tables = document.querySelectorAll('table:not(.recap-half)');
     let sv = 0, se = 0;
-    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => { let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText); sv += val || 0; });
+    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => {
+        let val = (el.tagName === 'INPUT') ? parseFloat(el.value) : parseFloat(el.innerText);
+        sv += val || 0;
+    });
     tables[w].querySelectorAll(`[id^='e-']`).forEach(td => se += parseFloat(td.innerText) || 0);
     document.getElementById(`tv-w${w}`).innerText = sv;
     document.getElementById(`te-w${w}`).innerText = se;

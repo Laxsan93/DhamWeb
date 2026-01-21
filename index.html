@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ETF Suivi d'Activité</title>
+    <title>Portail Activité ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -13,19 +13,19 @@
 <body>
 
 <div id="setup-screen" class="no-print">
-    <div class="setup-container">
-        <div class="setup-card">
-            <div class="setup-header">
-                <img src="ETFlogo.png" alt="ETF" class="setup-logo">
-                <div class="setup-title">
+    <div class="hero-container">
+        <div class="glass-card">
+            <div class="glass-header">
+                <img src="ETFlogo.png" alt="ETF" class="hero-logo">
+                <div class="hero-text">
                     <h1>Portail Activité</h1>
-                    <p>Générez votre rapport mensuel en quelques secondes</p>
+                    <p>Saisie et suivi des temps de travail</p>
                 </div>
             </div>
 
-            <div class="setup-body">
-                <div class="input-group">
-                    <label><i class="fa-solid fa-file-contract"></i> Modèle de document</label>
+            <div class="hero-body">
+                <div class="input-block">
+                    <label><i class="fa-solid fa-layer-group"></i> Modèle de document</label>
                     <select id="docType">
                         <option value="RIMA_TR">RIMA - Tickets Restaurant</option>
                         <option value="RIMA_ELO">RIMA - Éloignement</option>
@@ -34,25 +34,24 @@
                     </select>
                 </div>
 
-                <div class="form-row-setup">
-                    <div class="input-group">
-                        <label><i class="fa-solid fa-calendar-days"></i> Mois</label>
+                <div class="inline-group">
+                    <div class="input-block">
+                        <label><i class="fa-solid fa-calendar"></i> Mois</label>
                         <select id="monthSelect"></select>
                     </div>
-                    <div class="input-group">
-                        <label><i class="fa-solid fa-clock-rotate-left"></i> Année</label>
+                    <div class="input-block">
+                        <label><i class="fa-solid fa-hashtag"></i> Année</label>
                         <input type="number" id="yearInput" value="2026">
                     </div>
                 </div>
 
-                <button onclick="generateDocument()" class="btn-launch">
-                    <span>Créer le document</span>
-                    <i class="fa-solid fa-arrow-right"></i>
+                <button onclick="generateDocument()" class="btn-primary-launch">
+                    Générer le formulaire <i class="fa-solid fa-arrow-right-long"></i>
                 </button>
             </div>
-            
-            <div class="setup-footer">
-                <p><i class="fa-solid fa-shield-halved"></i> Application sécurisée ETF - 2026</p>
+
+            <div class="hero-footer">
+                <span><i class="fa-solid fa-lock"></i> Plateforme certifiée ETF</span>
             </div>
         </div>
     </div>
@@ -60,7 +59,7 @@
 
 <div id="document-container" style="display:none;">
     <div class="header-main">
-        <div class="logo-area"><img src="ETFlogo.png" alt="ETF Logo" id="etf-logo"></div>
+        <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
         <div class="title-area">
             <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
             <p id="monthYearHeader" class="highlight-date"></p>
@@ -103,7 +102,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Indiquez ici vos dates de formation ou commentaires particuliers..."></textarea>
+            <textarea placeholder="Formations, commentaires..."></textarea>
         </div>
     </div>
 
@@ -123,8 +122,8 @@
     </div>
 
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-print"></i> PDF</button>
-        <button onclick="toggleFullScreen()" class="btn-fullscreen"><i class="fa-solid fa-expand"></i> Plein Écran</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
+        <button onclick="toggleFullScreen()" class="btn-fullscreen"><i class="fa-solid fa-maximize"></i> Plein Écran</button>
         <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-rotate-left"></i> Retour</button>
     </div>
 </div>
