@@ -13,7 +13,6 @@ body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color
 .input-section { margin-bottom: 25px; }
 .input-section label { display: block; font-weight: 600; color: #64748b; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
 .main-select, .sub-select, .sub-input { width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 1rem; background: #f8fafc; outline: none; box-sizing: border-box; }
-.main-select:focus, .sub-select:focus, .sub-input:focus { border-color: #1e40af; background: #fff; }
 .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .btn-generate-main { width: 100%; padding: 18px; background: #1e40af; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; }
 .btn-generate-main:hover { background: #1d4ed8; transform: translateY(-3px); }

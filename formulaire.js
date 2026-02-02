@@ -10,8 +10,7 @@ window.onload = () => {
     if (sharedData) {
         try {
             const data = JSON.parse(decodeURIComponent(escape(atob(sharedData))));
-            globalConfig = data.config;
-            initFormulaire(globalConfig);
+            globalConfig = data.config; initFormulaire(globalConfig);
             setTimeout(() => restaurerDonnees(data), 200);
         } catch(e) { window.location.href='index.html'; }
     } else {
@@ -24,9 +23,7 @@ window.onload = () => {
 function initFormulaire(config) {
     document.getElementById('monthYearHeader').innerText = `${months[config.month]} ${config.year}`;
     renderCalendar(parseInt(config.year), parseInt(config.month), config.type);
-    initRecapTables();
-    initSignature('canvas-emp');
-    initSignature('canvas-mgr');
+    initRecapTables(); initSignature('canvas-emp'); initSignature('canvas-mgr');
 }
 
 function renderCalendar(year, month, type) {
@@ -74,8 +71,7 @@ function autoRemplir() {
         const day = parseInt(select.getAttribute('data-day'));
         const dayOfWeek = new Date(year, month, day).getDay();
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-            select.value = "P";
-            handleUpdate(globalConfig.type, day, 0);
+            select.value = "P"; handleUpdate(globalConfig.type, day, 0);
         }
     });
     for(let i=0; i<6; i++) sumWeek(i);
@@ -84,7 +80,14 @@ function autoRemplir() {
 
 function handleUpdate(type, id, w) {
     const code = document.getElementById(`c-${id}`).value;
-    let v = (code === "P" || code === "TT" || code === "JF") ? (type.includes('DHAM') ? 7 : 1) : (["CP", "RTT", "M"].includes(code) && !type.includes('DHAM') ? 1 : 0);
+    let v = 0; 
+    // Règle 1 / 0.5 / 0
+    if (code === "P" || code === "TT" || code === "JF") {
+        v = (type.includes('DHAM') ? 7 : 1);
+    } else if (code === "Demi P") {
+        v = (type.includes('DHAM') ? 3.5 : 0.5);
+    }
+
     let e = (code === "P" || code === "TT") ? 1 : 0;
     const vCell = document.getElementById(`v-${id}`);
     if (vCell) { if(type.includes('DHAM')) vCell.value = v; else vCell.innerText = v; }
@@ -104,12 +107,10 @@ function sumWeek(w) {
 }
 
 function initRecapTables() {
-    const b1 = document.getElementById('recap-body-1');
-    const b2 = document.getElementById('recap-body-2');
+    const b1 = document.getElementById('recap-body-1'); const b2 = document.getElementById('recap-body-2');
     b1.innerHTML = ""; b2.innerHTML = "";
     for (let c in codesPart1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td>${codesPart1[c]}</td><td id="count-${c}">0</td></tr>`;
     for (let c in codesPart2) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td>${codesPart2[c]}</td><td id="count-${c}">0</td></tr>`;
-    // Ligne supplémentaire pour les Tickets Restaurant
     b2.innerHTML += `<tr style="background:#f1f5f9"><td><strong>TR</strong></td><td><strong>Tickets Restaurant</strong></td><td id="count-TR">0</td></tr>`;
 }
 
@@ -118,10 +119,13 @@ function updateRecap() {
     let trTotal = 0;
     for (let c in allCodes) {
         let count = 0;
-        document.querySelectorAll('.code-select').forEach(s => { if(s.value === c) count++; });
+        document.querySelectorAll('.code-select').forEach(s => { 
+            if(s.value === c) {
+                if(c === "Demi P") count += 0.5; else count += 1;
+            }
+        });
         const el = document.getElementById(`count-${c}`); if(el) el.innerText = count;
     }
-    // Calcul des TR (somme de toutes les cases e-id)
     document.querySelectorAll(`[id^='e-']`).forEach(cell => trTotal += parseInt(cell.innerText) || 0);
     document.getElementById('count-TR').innerText = trTotal;
 }

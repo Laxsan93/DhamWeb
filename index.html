@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portail Activité ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=1.9">
+    <link rel="stylesheet" href="accueil.css?v=2.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -18,8 +18,8 @@
                     <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
                 </div>
                 <h1>Bonjour,</h1>
-                <p>Gérez vos rapports d'activité mensuels en toute simplicité. Sélectionnez vos paramètres pour commencer.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système opérationnel</div>
+                <p>Gérez vos rapports d'activité mensuels. Nouvelle règle de calcul 0.5 pour les demi-journées activée.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> v2.0 Opérationnel</div>
             </div>
         </div>
         <div class="config-panel">
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-    <script src="accueil.js?v=1.9"></script>
+    <script src="accueil.js?v=2.0"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
