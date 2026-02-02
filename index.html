@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETF Portail Activité</title>
+    <title>Portail Activité ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=1.6">
+    <link rel="stylesheet" href="accueil.css?v=1.7">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -18,14 +18,14 @@
                     <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
                 </div>
                 <h1>Bonjour,</h1>
-                <p>Bienvenue sur votre portail de gestion d'activité. Sélectionnez vos paramètres pour éditer votre rapport.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.6</div>
+                <p>Gérez vos rapports d'activité mensuels en toute simplicité. Sélectionnez vos paramètres pour commencer.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.7</div>
             </div>
         </div>
 
         <div class="config-panel">
             <div class="config-card">
-                <h2>Nouveau document</h2>
+                <h2>Configuration</h2>
                 <div class="input-section">
                     <label>Modèle de document</label>
                     <select id="docType" class="main-select">
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <script src="accueil.js?v=1.6"></script>
+    <script src="accueil.js?v=1.7"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });

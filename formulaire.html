@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=1.6">
+    <link rel="stylesheet" href="formulaire.css?v=1.7">
 </head>
 <body>
-
 <div id="document-container">
     <div class="header-main">
         <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
@@ -16,6 +15,11 @@
             <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
             <p id="monthYearHeader" class="highlight-date"></p>
         </div>
+    </div>
+
+    <div class="quick-fill-bar no-print">
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
+        <span class="hint">Pré-remplit automatiquement les jours travaillés.</span>
     </div>
 
     <div class="info-block">
@@ -48,7 +52,7 @@
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea id="observations" placeholder="Commentaires ou dates de formation..."></textarea>
+            <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
         </div>
     </div>
 
@@ -73,7 +77,6 @@
         <button onclick="window.location.href='index.html'" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
     </div>
 </div>
-
-<script src="formulaire.js?v=1.6"></script>
+<script src="formulaire.js?v=1.7"></script>
 </body>
 </html>
