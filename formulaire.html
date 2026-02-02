@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=1.7">
+    <link rel="stylesheet" href="formulaire.css?v=1.9">
 </head>
 <body>
 <div id="document-container">
     <div class="header-main">
         <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
         <div class="title-area">
-            <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
+            <h2>SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
             <p id="monthYearHeader" class="highlight-date"></p>
         </div>
-    </div>
-
-    <div class="quick-fill-bar no-print">
-        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
-        <span class="hint">Pré-remplit automatiquement les jours travaillés.</span>
     </div>
 
     <div class="info-block">
@@ -34,26 +29,33 @@
     </div>
 
     <div class="transport-section">
-        <div class="transport-title">Pass NAVIGO :</div>
-        <div class="transport-options">
-            <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
-            <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
-            <span class="spacer">| Si OUI :</span>
-            <input type="checkbox" id="nav-hebdo"> Hebdo. <input type="checkbox" id="nav-mens"> Mensuel <input type="checkbox" id="nav-ann"> Annuel
-        </div>
+        <span class="transport-title">Pass NAVIGO :</span>
+        <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
+        <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
+        <span class="spacer">| Si OUI :</span>
+        <input type="checkbox" id="nav-hebdo"> Hebdo. <input type="checkbox" id="nav-mens"> Mensuel <input type="checkbox" id="nav-ann"> Annuel
+    </div>
+
+    <div class="quick-fill-bar no-print">
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
     </div>
 
     <div id="weeks-container"></div>
 
-    <div class="recap-section">
-        <div class="recap-tables-wrapper">
-            <table class="recap-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
-            <table class="recap-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
-        </div>
-        <div class="obs-full-width">
-            <label><strong>OBSERVATIONS :</strong></label>
-            <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
-        </div>
+    <div class="recap-wrapper">
+        <table class="recap-table-half">
+            <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+            <tbody id="recap-body-1"></tbody>
+        </table>
+        <table class="recap-table-half">
+            <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+            <tbody id="recap-body-2"></tbody>
+        </table>
+    </div>
+
+    <div class="obs-container-wide">
+        <label><strong>OBSERVATIONS :</strong></label>
+        <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
     </div>
 
     <div class="signature-grid">
@@ -77,6 +79,6 @@
         <button onclick="window.location.href='index.html'" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
     </div>
 </div>
-<script src="formulaire.js?v=1.7"></script>
+<script src="formulaire.js?v=1.9"></script>
 </body>
 </html>

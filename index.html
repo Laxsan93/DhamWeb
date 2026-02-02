@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portail Activité ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=1.7">
+    <link rel="stylesheet" href="accueil.css?v=1.9">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -19,10 +19,9 @@
                 </div>
                 <h1>Bonjour,</h1>
                 <p>Gérez vos rapports d'activité mensuels en toute simplicité. Sélectionnez vos paramètres pour commencer.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.7</div>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système opérationnel</div>
             </div>
         </div>
-
         <div class="config-panel">
             <div class="config-card">
                 <h2>Configuration</h2>
@@ -45,14 +44,11 @@
                         <input type="number" id="yearInput" value="2026" class="sub-input">
                     </div>
                 </div>
-                <button onclick="lancerSaisie()" class="btn-generate-main">
-                    Ouvrir le formulaire <i class="fa-solid fa-chevron-right"></i>
-                </button>
+                <button onclick="lancerSaisie()" class="btn-generate-main">Ouvrir le formulaire <i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
     </div>
-
-    <script src="accueil.js?v=1.7"></script>
+    <script src="accueil.js?v=1.9"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
