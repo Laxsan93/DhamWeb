@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saisie Rapport ETF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="formulaire.css?v=1.5">
+</head>
+<body>
+
+<div id="document-container">
+    <div class="header-main">
+        <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
+        <div class="title-area">
+            <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
+            <p id="monthYearHeader" class="highlight-date"></p>
+        </div>
+    </div>
+
+    <div class="info-block">
+        <div class="info-row">
+            <div class="field"><span>Nom :</span><input type="text"></div>
+            <div class="field"><span>Service :</span><input type="text"></div>
+        </div>
+        <div class="info-row">
+            <div class="field"><span>Prénom :</span><input type="text"></div>
+            <div class="field"><span>Matricule :</span><input type="text"></div>
+        </div>
+    </div>
+
+    <div class="transport-section">
+        <div class="transport-title">Pass NAVIGO :</div>
+        <div class="transport-options">
+            <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
+            <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
+            <span class="spacer">| Si OUI :</span>
+            <input type="checkbox"> Hebdo. <input type="checkbox"> Mensuel <input type="checkbox"> Annuel
+        </div>
+    </div>
+
+    <div id="weeks-container"></div>
+
+    <div class="recap-section">
+        <div class="recap-tables-wrapper">
+            <table class="recap-half">
+                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+                <tbody id="recap-body-1"></tbody>
+            </table>
+            <table class="recap-half">
+                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
+                <tbody id="recap-body-2"></tbody>
+            </table>
+        </div>
+        <div class="obs-full-width">
+            <label><strong>OBSERVATIONS :</strong></label>
+            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
+        </div>
+    </div>
+
+    <div class="signature-grid">
+        <div class="sig-card">
+            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
+            <p><strong>Signature du salarié :</strong></p>
+            <canvas id="canvas-emp" width="350" height="90"></canvas>
+            <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
+        </div>
+        <div class="sig-card">
+            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
+            <p><strong>Signature du Responsable Hiérarchique :</strong></p>
+            <canvas id="canvas-mgr" width="350" height="90"></canvas>
+            <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
+        </div>
+    </div>
+
+    <div class="actions no-print">
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
+        <button onclick="window.location.href='index.html'" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
+    </div>
+</div>
+
+<script src="formulaire.js?v=1.5"></script>
+</body>
+</html>

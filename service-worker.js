@@ -1,32 +1,27 @@
-const CACHE_NAME = 'etf-cache-v1.4'; // On change de version ici
+const CACHE_NAME = 'etf-cache-v1.5';
 const ASSETS = [
   'index.html',
-  'style.css',
-  'script.js',
+  'accueil.css',
+  'accueil.js',
+  'formulaire.html',
+  'formulaire.css',
+  'formulaire.js',
   'ETFlogo.png',
   'manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS))
-  );
+  e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)));
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      );
-    })
-  );
+  e.waitUntil(caches.keys().then((keys) => {
+    return Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)));
+  }));
   return self.clients.claim();
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
-  );
+  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
 });

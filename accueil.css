@@ -1,0 +1,27 @@
+body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f8fafc; }
+.dashboard-home { display: flex; min-height: 100vh; width: 100%; }
+.welcome-sidebar { flex: 1; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; display: flex; align-items: center; justify-content: center; padding: 60px; }
+.sidebar-content { max-width: 400px; }
+.logo-wrapper { background: white; padding: 10px; border-radius: 15px; display: inline-block; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.side-logo { width: 130px; }
+.sidebar-content h1 { font-size: 3rem; margin: 0 0 20px 0; }
+.sidebar-content p { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; }
+.status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 50px; font-size: 0.9rem; margin-top: 40px; }
+
+.config-panel { flex: 1.5; display: flex; align-items: center; justify-content: center; padding: 40px; }
+.config-card { width: 100%; max-width: 600px; background: white; padding: 50px; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+.config-card h2 { font-size: 1.8rem; color: #1e293b; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+
+.input-section { margin-bottom: 25px; }
+.input-section label { display: block; font-weight: 600; color: #64748b; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
+.main-select, .sub-select, .sub-input { width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 1rem; background: #f8fafc; outline: none; transition: 0.3s; }
+.main-select:focus { border-color: #1e40af; background: #fff; }
+
+.date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.btn-generate-main { width: 100%; padding: 18px; background: #1e40af; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; }
+.btn-generate-main:hover { background: #1d4ed8; transform: translateY(-3px); }
+
+@media (max-width: 900px) {
+    .dashboard-home { flex-direction: column; }
+    .welcome-sidebar { padding: 40px; text-align: center; }
+}
