@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=1.5">
+    <link rel="stylesheet" href="formulaire.css?v=1.6">
 </head>
 <body>
 
@@ -20,12 +20,12 @@
 
     <div class="info-block">
         <div class="info-row">
-            <div class="field"><span>Nom :</span><input type="text"></div>
-            <div class="field"><span>Service :</span><input type="text"></div>
+            <div class="field"><span>Nom :</span><input type="text" id="nom"></div>
+            <div class="field"><span>Service :</span><input type="text" id="service"></div>
         </div>
         <div class="info-row">
-            <div class="field"><span>Prénom :</span><input type="text"></div>
-            <div class="field"><span>Matricule :</span><input type="text"></div>
+            <div class="field"><span>Prénom :</span><input type="text" id="prenom"></div>
+            <div class="field"><span>Matricule :</span><input type="text" id="matricule"></div>
         </div>
     </div>
 
@@ -35,7 +35,7 @@
             <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
             <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
             <span class="spacer">| Si OUI :</span>
-            <input type="checkbox"> Hebdo. <input type="checkbox"> Mensuel <input type="checkbox"> Annuel
+            <input type="checkbox" id="nav-hebdo"> Hebdo. <input type="checkbox" id="nav-mens"> Mensuel <input type="checkbox" id="nav-ann"> Annuel
         </div>
     </div>
 
@@ -43,30 +43,24 @@
 
     <div class="recap-section">
         <div class="recap-tables-wrapper">
-            <table class="recap-half">
-                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-                <tbody id="recap-body-1"></tbody>
-            </table>
-            <table class="recap-half">
-                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-                <tbody id="recap-body-2"></tbody>
-            </table>
+            <table class="recap-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
+            <table class="recap-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
         </div>
         <div class="obs-full-width">
             <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
+            <textarea id="observations" placeholder="Commentaires ou dates de formation..."></textarea>
         </div>
     </div>
 
     <div class="signature-grid">
         <div class="sig-card">
-            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
+            <p>Le : <input type="text" id="date-emp" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du salarié :</strong></p>
             <canvas id="canvas-emp" width="350" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
         </div>
         <div class="sig-card">
-            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
+            <p>Le : <input type="text" id="date-mgr" class="input-date" placeholder="JJ/MM/AAAA"></p>
             <p><strong>Signature du Responsable Hiérarchique :</strong></p>
             <canvas id="canvas-mgr" width="350" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
@@ -74,11 +68,12 @@
     </div>
 
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF Final</button>
+        <button onclick="genererLienPartage()" class="btn-share"><i class="fa-solid fa-share-nodes"></i> Partager au Responsable</button>
         <button onclick="window.location.href='index.html'" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
     </div>
 </div>
 
-<script src="formulaire.js?v=1.5"></script>
+<script src="formulaire.js?v=1.6"></script>
 </body>
 </html>

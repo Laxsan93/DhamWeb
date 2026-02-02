@@ -1,13 +1,8 @@
-const CACHE_NAME = 'etf-cache-v1.5';
+const CACHE_NAME = 'etf-v1.6';
 const ASSETS = [
-  'index.html',
-  'accueil.css',
-  'accueil.js',
-  'formulaire.html',
-  'formulaire.css',
-  'formulaire.js',
-  'ETFlogo.png',
-  'manifest.json'
+  'index.html', 'accueil.css', 'accueil.js',
+  'formulaire.html', 'formulaire.css', 'formulaire.js',
+  'ETFlogo.png', 'manifest.json'
 ];
 
 self.addEventListener('install', (e) => {

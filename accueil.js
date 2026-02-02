@@ -11,10 +11,6 @@ function lancerSaisie() {
         year: document.getElementById('yearInput').value,
         type: document.getElementById('docType').value
     };
-    
-    // On enregistre les données dans le LocalStorage
     localStorage.setItem('etf_config', JSON.stringify(config));
-    
-    // Redirection vers la page du formulaire
     window.location.href = 'formulaire.html';
 }
