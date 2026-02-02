@@ -2,17 +2,15 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETF Portail Activité</title>
-    <link rel="stylesheet" href="style.css?v=1.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="accueil.css?v=1.5">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
 </head>
 <body>
-
-<div id="setup-screen" class="no-print">
     <div class="dashboard-home">
         <div class="welcome-sidebar">
             <div class="sidebar-content">
@@ -20,8 +18,8 @@
                     <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
                 </div>
                 <h1>Bonjour,</h1>
-                <p>Votre portail de gestion d'activité est prêt. Configurez votre rapport mensuel pour commencer la saisie.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.4</div>
+                <p>Bienvenue sur votre portail. Configurez votre rapport mensuel pour commencer la saisie.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v1.5</div>
             </div>
         </div>
 
@@ -47,100 +45,18 @@
                         <input type="number" id="yearInput" value="2026" class="sub-input">
                     </div>
                 </div>
-                <button onclick="generateDocument()" class="btn-generate-main">
+                <button onclick="lancerSaisie()" class="btn-generate-main">
                     Ouvrir le formulaire <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
         </div>
     </div>
-</div>
 
-<div id="document-container" style="display:none;">
-    <div class="header-main">
-        <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
-        <div class="title-area">
-            <h2 id="docHeaderTitle">SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
-            <p id="monthYearHeader" class="highlight-date"></p>
-        </div>
-    </div>
-
-    <div class="info-block">
-        <div class="info-row">
-            <div class="field"><span>Nom :</span><input type="text"></div>
-            <div class="field"><span>Service :</span><input type="text"></div>
-        </div>
-        <div class="info-row">
-            <div class="field"><span>Prénom :</span><input type="text"></div>
-            <div class="field"><span>Matricule :</span><input type="text"></div>
-        </div>
-    </div>
-
-    <div class="transport-section">
-        <div class="transport-title">Pass NAVIGO :</div>
-        <div class="transport-options">
-            <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
-            <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
-            <span class="spacer">| Si OUI :</span>
-            <input type="checkbox"> Hebdo. <input type="checkbox"> Mensuel <input type="checkbox"> Annuel
-        </div>
-    </div>
-
-    <div id="weeks-container"></div>
-
-    <div class="recap-section">
-        <div class="recap-tables-wrapper">
-            <table class="recap-half">
-                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-                <tbody id="recap-body-1"></tbody>
-            </table>
-            <table class="recap-half">
-                <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-                <tbody id="recap-body-2"></tbody>
-            </table>
-        </div>
-        <div class="obs-full-width">
-            <label><strong>OBSERVATIONS :</strong></label>
-            <textarea placeholder="Commentaires ou dates de formation..."></textarea>
-        </div>
-    </div>
-
-    <div class="signature-grid">
-        <div class="sig-card">
-            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
-            <p><strong>Signature du salarié :</strong></p>
-            <canvas id="canvas-emp" width="350" height="90"></canvas>
-            <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
-        </div>
-        <div class="sig-card">
-            <p>Le : <input type="text" class="input-date" placeholder="JJ/MM/AAAA"></p>
-            <p><strong>Signature du Responsable Hiérarchique :</strong></p>
-            <canvas id="canvas-mgr" width="350" height="90"></canvas>
-            <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
-        </div>
-    </div>
-
-    <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> Imprimer / PDF</button>
-        <button onclick="location.reload()" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
-    </div>
-</div>
-
-<script src="script.js?v=1.4"></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js').then(reg => {
-        reg.onupdatefound = () => {
-          const installingWorker = reg.installing;
-          installingWorker.onstatechange = () => {
-            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              window.location.reload();
-            }
-          };
-        };
-      });
-    });
-  }
-</script>
+    <script src="accueil.js?v=1.5"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
+        }
+    </script>
 </body>
 </html>
