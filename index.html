@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail Activité ETF</title>
+    <title>ETF Portail Activité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=2.0">
+    <link rel="stylesheet" href="accueil.css?v=2.3">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -18,8 +18,8 @@
                     <img src="ETFlogo.png" alt="ETF Logo" class="side-logo">
                 </div>
                 <h1>Bonjour,</h1>
-                <p>Gérez vos rapports d'activité mensuels. Nouvelle règle de calcul 0.5 pour les demi-journées activée.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> v2.0 Opérationnel</div>
+                <p>Gérez vos rapports d'activité mensuels. Importation et sauvegarde intégrale corrigées.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système à jour v2.3</div>
             </div>
         </div>
         <div class="config-panel">
@@ -44,15 +44,13 @@
                         <input type="number" id="yearInput" value="2026" class="sub-input">
                     </div>
                 </div>
-                <button onclick="lancerSaisie()" class="btn-generate-main">Ouvrir le formulaire <i class="fa-solid fa-chevron-right"></i></button>
+                <button onclick="lancerSaisie()" class="btn-generate-main">Lancer une nouvelle saisie <i class="fa-solid fa-chevron-right"></i></button>
+                <div class="separator"><span>OU</span></div>
+                <button onclick="document.getElementById('importFileHome').click()" class="btn-import-home"><i class="fa-solid fa-file-import"></i> Importer un rapport reçu</button>
+                <input type="file" id="importFileHome" style="display:none" accept=".json" onchange="importerRapportAccueil(event)">
             </div>
         </div>
     </div>
-    <script src="accueil.js?v=2.0"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('service-worker.js'); });
-        }
-    </script>
+    <script src="accueil.js?v=2.3"></script>
 </body>
 </html>
