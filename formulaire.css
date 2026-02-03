@@ -11,7 +11,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* VIGILANCE FIXED COLORS */
+/* VIGILANCE COLORS */
 .vigilance-container-blue { background: #fff; padding: 10px 15px; }
 .vigilance-title-red { color: #ff0000; text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; }
 .vigilance-list-green { list-style: none; padding: 0 5px; margin: 0; }
@@ -21,7 +21,6 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .transport-section { padding: 8px; font-size: 11px; }
 .navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
-.navigo-flex-container label { white-space: nowrap; cursor: pointer; }
 
 .quick-fill-bar { background: #eff6ff; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px dashed #3b82f6; }
 .btn-quick { background: #1e40af; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
@@ -46,16 +45,12 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 
 .actions { padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .actions button { padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; font-weight: bold; }
-.btn-print { background: #10b981; }
-.btn-save { background: #8b5cf6; }
-.btn-share { background: #3b82f6; }
-.btn-back { background: #64748b; }
 
 @media (max-width: 600px) { .info-row { flex-direction: column; } .signature-grid { grid-template-columns: 1fr; } .recap-wrapper { flex-direction: column; } }
 
-/* --- FIX IMPRESSION PDF (Ajustement A4) --- */
+/* --- OPTIMISATION PDF IPHONE (2 PAGES) --- */
 @media print {
-    @page { size: A4; margin: 1cm; }
+    @page { size: A4; margin: 0.5cm; }
     body { background: white !important; }
     #document-container {
         width: 100% !important;
@@ -63,8 +58,8 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
-        /* Force le contenu à s'adapter si légèrement trop large */
-        transform: scale(0.98); 
+        /* Échelle réduite à 0.9 pour forcer le passage à 2 pages sur iPhone */
+        transform: scale(0.90); 
         transform-origin: top left;
     }
     .no-print { display: none !important; }
@@ -72,6 +67,4 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
     table { width: 100% !important; min-width: 0 !important; page-break-inside: avoid; }
     .signature-grid, .recap-wrapper, .vigilance-container-blue { page-break-inside: avoid; }
     .vigilance-container-blue { border: 2.2px solid #1e40af !important; -webkit-print-color-adjust: exact; }
-    .vigilance-title-red { color: #ff0000 !important; }
-    .vigilance-list-green li, .vigilance-list-green i { color: #008000 !important; }
 }
