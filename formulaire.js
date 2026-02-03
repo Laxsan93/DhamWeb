@@ -80,10 +80,12 @@ function initSignature(id) {
 function sumWeek(w) {
     const tables = document.querySelectorAll('.table-wrapper table');
     let sv = 0, se = 0;
-    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.innerText) || 0);
-    tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
-    document.getElementById(`tv-w${w}`).innerText = sv;
-    document.getElementById(`te-w${w}`).innerText = se;
+    if(tables[w]) {
+        tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.innerText) || 0);
+        tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
+        document.getElementById(`tv-w${w}`).innerText = sv;
+        document.getElementById(`te-w${w}`).innerText = se;
+    }
 }
 
 function initRecapTables() {
@@ -144,4 +146,5 @@ async function partagerJson() {
         } catch (err) { console.error(err); }
     } else { alert("Partage non supporté."); }
 }
+
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0,0,400,200); }
