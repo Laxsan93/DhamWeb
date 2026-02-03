@@ -1,4 +1,4 @@
-body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f8fafc; overflow: auto; }
+body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: #f8fafc; overflow-y: auto; }
 .dashboard-home { display: flex; min-height: 100vh; width: 100%; }
 .welcome-sidebar { flex: 1; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; display: flex; align-items: center; justify-content: center; padding: 60px; }
 .sidebar-content { max-width: 400px; }
