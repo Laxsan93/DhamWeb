@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=2.7">
+    <link rel="stylesheet" href="formulaire.css?v=2.8">
 </head>
 <body>
 <div id="document-container">
     <div class="header-main">
         <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
-        <div class="title-area"><h2>SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2><p id="monthYearHeader" class="highlight-date"></p></div>
+        <div class="title-area">
+            <h2>SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
+            <p id="monthYearHeader" class="highlight-date"></p>
+        </div>
     </div>
     <div class="info-block">
         <div class="info-row">
@@ -26,9 +29,9 @@
     <div class="vigilance-container-blue">
         <h3 class="vigilance-title-red">POINTS DE VIGILANCE</h3>
         <ul class="vigilance-list-green">
-            <li><i class="fa-solid fa-check"></i><span>Repos quotidien de 11h et hebdomadaire de 35h obligatoire.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Veiller à une charge de travail raisonnable.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Utilisez le code "P" pour les formations et précisez en observations.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Chaque salarié doit impérativement bénéficier d'un repos quotidien de 11h et hebdomadaire de 35h.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Veiller à ce que la charge de travail soit raisonnable et permette une bonne répartition.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Pour les formations, utilisez le code "P" et indiquez les dates en observations.</span></li>
         </ul>
     </div>
     <div class="transport-section">
@@ -43,25 +46,28 @@
         </div>
     </div>
     <div class="quick-fill-bar no-print">
-        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven)</button>
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
     </div>
     <div id="weeks-container"></div>
     <div class="recap-wrapper">
         <table class="recap-table-half"><thead><tr><th>Code</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
         <table class="recap-table-half"><thead><tr><th>Code</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
     </div>
-    <div class="obs-container-wide"><label><strong>OBSERVATIONS :</strong></label><textarea id="observations" placeholder="Formations, commentaires..."></textarea></div>
+    <div class="obs-container-wide">
+        <label><strong>OBSERVATIONS :</strong></label>
+        <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
+    </div>
     <div class="signature-grid">
         <div class="sig-card"><p>Signature salarié :</p><canvas id="canvas-emp" width="350" height="90"></canvas><button class="no-print" onclick="clearCanvas('canvas-emp')">Effacer</button></div>
         <div class="sig-card"><p>Signature Responsable :</p><canvas id="canvas-mgr" width="350" height="90"></canvas><button class="no-print" onclick="clearCanvas('canvas-mgr')">Effacer</button></div>
     </div>
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF Final</button>
         <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-download"></i> Télécharger</button>
         <button onclick="partagerJson()" class="btn-share"><i class="fa-solid fa-share-nodes"></i> Partager JSON</button>
         <button onclick="window.location.href='index.html'" class="btn-back">Accueil</button>
     </div>
 </div>
-<script src="formulaire.js?v=2.7"></script>
+<script src="formulaire.js?v=2.8"></script>
 </body>
 </html>

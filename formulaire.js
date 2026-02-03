@@ -52,7 +52,6 @@ function handleUpdate(type, id, w) {
     document.getElementById(`v-${id}`).innerText = v; sumWeek(w); updateRecap();
 }
 
-/* SIGNATURE STABLE RESTAURÉE */
 function initSignature(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
@@ -74,7 +73,6 @@ function sumWeek(w) {
     document.getElementById(`tv-w${w}`).innerText = sv;
 }
 
-/* NOUVELLE FONCTION PARTAGE NATIF JSON */
 async function partagerJson() {
     const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
     const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
@@ -85,7 +83,7 @@ async function partagerJson() {
             const file = new File([jsonStr], fileName, { type: "application/json" });
             await navigator.share({ files: [file], title: 'Mon Rapport ETF', text: 'Partage du rapport JSON.' });
         } catch (err) { console.error(err); }
-    } else { alert("Partage non supporté. Téléchargez le fichier."); }
+    } else { alert("Partage non supporté."); }
 }
 
 function exporterDonnees() {

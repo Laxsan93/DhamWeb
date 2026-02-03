@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETF Portail Activité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=2.7">
+    <link rel="stylesheet" href="accueil.css?v=2.8">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -16,8 +16,8 @@
             <div class="sidebar-content">
                 <div class="logo-wrapper"><img src="ETFlogo.png" alt="ETF Logo" class="side-logo"></div>
                 <h1>Bonjour,</h1>
-                <p>Gérez vos rapports d'activité. Version 2.7 avec partage natif.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> Système v2.7 prêt</div>
+                <p>Gérez vos rapports d'activité. Version 2.8 : Correctifs visuels Observations et Récapitulatif.</p>
+                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> v2.8 Opérationnel</div>
             </div>
         </div>
         <div class="config-panel">
@@ -38,11 +38,11 @@
                 </div>
                 <button onclick="lancerSaisie()" class="btn-generate-main">Nouvelle saisie <i class="fa-solid fa-chevron-right"></i></button>
                 <div class="separator"><span>OU</span></div>
-                <button onclick="document.getElementById('importFileHome').click()" class="btn-import-home"><i class="fa-solid fa-file-import"></i> Importer Rapport</button>
+                <button onclick="document.getElementById('importFileHome').click()" class="btn-import-home"><i class="fa-solid fa-file-import"></i> Importer un rapport</button>
                 <input type="file" id="importFileHome" style="display:none" accept=".json" onchange="importerRapportAccueil(event)">
             </div>
         </div>
     </div>
-    <script src="accueil.js?v=2.7"></script>
+    <script src="accueil.js?v=2.8"></script>
 </body>
 </html>

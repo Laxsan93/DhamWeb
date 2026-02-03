@@ -16,7 +16,7 @@ function importerRapportAccueil(event) {
             const data = JSON.parse(e.target.result);
             localStorage.setItem('etf_import_full', JSON.stringify(data));
             window.location.href = 'formulaire.html';
-        } catch (err) { alert("Fichier invalide."); }
+        } catch (err) { alert("Erreur : Fichier invalide."); }
     };
     reader.readAsText(file);
 }
