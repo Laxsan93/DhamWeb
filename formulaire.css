@@ -1,37 +1,38 @@
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f9; overflow-x: hidden; }
-#document-container { background: white; margin: 20px auto; padding: 0.6cm; width: 96%; max-width: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-.header-main, .info-block, .vigilance-container-blue, .transport-section { border: 2px solid #1e40af; margin-bottom: 5px; }
+#document-container { background: white; margin: 10px auto; padding: 0.6cm; width: 98%; max-width: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+.header-main, .info-block, .vigilance-container-blue, .transport-section { border: 2.2px solid #1e40af; margin-bottom: 5px; }
 .header-main { display: grid; grid-template-columns: 120px 1fr; }
-.logo-area { border-right: 2px solid #1e40af; display: flex; align-items: center; justify-content: center; padding: 5px; }
+.logo-area { border-right: 2.2px solid #1e40af; display: flex; align-items: center; justify-content: center; padding: 5px; }
 #etf-logo { max-width: 100px; }
-.title-area { text-align: center; color: #1e40af; padding: 10px; }
-.info-row { display: flex; gap: 20px; padding: 10px; }
+.title-area { text-align: center; color: #1e40af; padding: 5px; }
+.info-row { display: flex; gap: 20px; padding: 5px 10px; }
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* FIX NAVIGO */
+/* FIX PASS NAVIGO DÉBORDEMENT */
 .transport-section { padding: 8px; font-size: 11px; }
-.navigo-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
-.navigo-row label { white-space: nowrap; display: flex; align-items: center; gap: 3px; }
+.navigo-flex-container label { white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 3px; }
 
-.vigilance-title-red { color: #ff0000; text-align: center; font-size: 13px; margin: 5px; }
-.vigilance-list-green { color: #059669; font-size: 10.5px; list-style: none; padding: 0 15px; }
+.vigilance-title-red { color: #ff0000; text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; }
+.vigilance-list-green { list-style: none; padding: 0 15px; margin: 0; color: #059669; font-weight: 600; font-size: 10.5px; }
 
-.table-wrapper { width: 100%; overflow-x: auto; margin-bottom: 10px; }
-table { width: 100%; min-width: 800px; border-collapse: collapse; }
-th, td { border: 1px solid #000; height: 24px; font-size: 11px; text-align: center; }
+.table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 10px; }
+table { width: 100%; min-width: 850px; border-collapse: collapse; table-layout: fixed; }
+th, td { border: 1px solid #000; height: 26px; text-align: center; font-size: 11px; }
 th { background: #1e40af !important; color: #fff !important; }
 
-.signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.sig-card { border: 1px solid #000; padding: 5px; text-align: center; }
-canvas { background: #fafafa; width: 100%; height: 90px; border: 1px dashed #ccc; }
+.signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.sig-card { border: 1.5px solid #000; padding: 8px; text-align: center; }
+canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px; cursor: crosshair; }
 
 .actions { padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .actions button { padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; font-weight: bold; }
 .btn-print { background: #10b981; }
 .btn-save { background: #8b5cf6; }
-.btn-share { background: #3b82f6; } /* Couleur Share native */
+.btn-share { background: #3b82f6; }
 .btn-back { background: #64748b; }
 
 @media (max-width: 600px) { .info-row { flex-direction: column; } .signature-grid { grid-template-columns: 1fr; } }
+@media print { .no-print { display: none !important; } .table-wrapper { overflow: visible; } table { min-width: 100%; } }
