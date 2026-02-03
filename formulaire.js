@@ -62,6 +62,7 @@ function handleUpdate(type, id, w) {
     sumWeek(w); updateRecap();
 }
 
+/* SIGNATURE FIXE (VOTRE VERSION ANCIENNE) */
 function initSignature(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
@@ -107,7 +108,8 @@ function exporterDonnees() {
 
 function restaurerDonnees(data) {
     for (let id in data.values) {
-        const el = document.getElementById(id); if (el) { if(el.tagName === 'TD') el.innerText = data.values[id]; else el.value = data.values[id]; }
+        const el = document.getElementById(id);
+        if (el) { if(el.tagName === 'TD') el.innerText = data.values[id]; else el.value = data.values[id]; }
     }
     document.getElementById('nav-yes').checked = data.nav.yes; document.getElementById('nav-hebdo').checked = data.nav.h;
     document.getElementById('nav-mens').checked = data.nav.m; document.getElementById('nav-ann').checked = data.nav.a;
@@ -121,7 +123,7 @@ function initRecapTables() {
     const p1 = ["P", "TT", "CP", "RTT", "M", "AT/MP", "EV"];
     for (let c of p1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`;
     for (let c in allCodes) { if(!p1.includes(c)) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`; }
-    b2.innerHTML += `<tr style="background:#f1f5f9"><td><strong>TR</strong></td><td><strong>Total TR</strong></td><td id="count-TR">0</td></tr>`;
+    b2.innerHTML += `<tr style="background:#f1f5f9"><td><strong>TR</strong></td><td><strong>Tickets Restaurant</strong></td><td id="count-TR">0</td></tr>`;
 }
 
 function updateRecap() {
