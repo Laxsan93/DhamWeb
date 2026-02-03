@@ -144,5 +144,4 @@ async function partagerJson() {
         } catch (err) { console.error(err); }
     } else { alert("Partage non supporté."); }
 }
-
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0,0,400,200); }

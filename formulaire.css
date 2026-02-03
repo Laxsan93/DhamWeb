@@ -1,4 +1,4 @@
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f9; overflow-x: hidden; }
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f9; color: #000; overflow-x: hidden; }
 #document-container { background: white; margin: 10px auto; padding: 0.6cm; width: 98%; max-width: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
 
 .header-main, .info-block, .vigilance-container-blue, .transport-section { border: 2.2px solid #1e40af; margin-bottom: 5px; }
@@ -11,27 +11,17 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* COULEURS VIGILANCE FIXED */
+/* VIGILANCE FIXED COLORS */
 .vigilance-container-blue { background: #fff; padding: 10px 15px; }
-.vigilance-title-red { 
-    color: #ff0000; /* ROUGE VIF */
-    text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; 
-}
+.vigilance-title-red { color: #ff0000; text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; }
 .vigilance-list-green { list-style: none; padding: 0 5px; margin: 0; }
-.vigilance-list-green li { 
-    display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start;
-    color: #008000; /* VERT FONCÉ LISIBLE */
-    font-size: 10.5px; font-weight: 600; line-height: 1.3; 
-}
-.vigilance-list-green li i { 
-    color: #008000; /* VERT FONCÉ ICONE */
-    font-size: 11px; margin-top: 2px; flex-shrink: 0; 
-}
+.vigilance-list-green li { display: flex; gap: 8px; margin-bottom: 4px; color: #008000; font-size: 10.5px; font-weight: 600; line-height: 1.3; }
+.vigilance-list-green i { color: #008000; font-size: 11px; margin-top: 2px; }
 
 .transport-section { padding: 8px; font-size: 11px; }
 .navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
-.navigo-flex-container label { white-space: nowrap; display: flex; align-items: center; gap: 3px; }
+.navigo-flex-container label { white-space: nowrap; cursor: pointer; }
 
 .quick-fill-bar { background: #eff6ff; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px dashed #3b82f6; }
 .btn-quick { background: #1e40af; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
@@ -61,9 +51,27 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 .btn-share { background: #3b82f6; }
 .btn-back { background: #64748b; }
 
-@media (max-width: 600px) { 
-    .info-row { flex-direction: column; } 
-    .signature-grid { grid-template-columns: 1fr; } 
-    .recap-wrapper { flex-direction: column; }
+@media (max-width: 600px) { .info-row { flex-direction: column; } .signature-grid { grid-template-columns: 1fr; } .recap-wrapper { flex-direction: column; } }
+
+/* --- FIX IMPRESSION PDF (Ajustement A4) --- */
+@media print {
+    @page { size: A4; margin: 1cm; }
+    body { background: white !important; }
+    #document-container {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        /* Force le contenu à s'adapter si légèrement trop large */
+        transform: scale(0.98); 
+        transform-origin: top left;
+    }
+    .no-print { display: none !important; }
+    .table-wrapper { overflow: visible !important; }
+    table { width: 100% !important; min-width: 0 !important; page-break-inside: avoid; }
+    .signature-grid, .recap-wrapper, .vigilance-container-blue { page-break-inside: avoid; }
+    .vigilance-container-blue { border: 2.2px solid #1e40af !important; -webkit-print-color-adjust: exact; }
+    .vigilance-title-red { color: #ff0000 !important; }
+    .vigilance-list-green li, .vigilance-list-green i { color: #008000 !important; }
 }
-@media print { .no-print { display: none !important; } .table-wrapper { overflow: visible; } table { min-width: 100%; } }
