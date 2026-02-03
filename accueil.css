@@ -2,23 +2,17 @@ body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color
 .dashboard-home { display: flex; min-height: 100vh; width: 100%; }
 .welcome-sidebar { flex: 1; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; display: flex; align-items: center; justify-content: center; padding: 60px; }
 .sidebar-content { max-width: 400px; }
-.logo-wrapper { background: white; padding: 12px; border-radius: 18px; display: inline-block; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.logo-wrapper { background: white; padding: 12px; border-radius: 18px; display: inline-block; margin-bottom: 30px; }
 .side-logo { width: 130px; }
-.sidebar-content h1 { font-size: 3rem; margin: 0 0 20px 0; }
-.sidebar-content p { font-size: 1.2rem; line-height: 1.6; opacity: 0.9; }
-.status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; margin-top: 40px; }
-.config-panel { flex: 1.5; display: flex; align-items: center; justify-content: center; padding: 40px; }
-.config-card { width: 100%; max-width: 550px; background: white; padding: 50px; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
-.config-card h2 { font-size: 1.8rem; color: #1e293b; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+.sidebar-content h1 { font-size: 3rem; margin: 0; }
+.status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 50px; margin-top: 40px; }
+.config-panel { flex: 1.5; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.config-card { width: 100%; max-width: 550px; background: white; padding: 40px; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
 .input-section { margin-bottom: 25px; }
-.input-section label { display: block; font-weight: 600; color: #64748b; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; }
-.main-select, .sub-select, .sub-input { width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 1rem; background: #f8fafc; outline: none; box-sizing: border-box; }
+.input-section label { display: block; font-weight: 600; color: #64748b; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem; }
+.main-select, .sub-select, .sub-input { width: 100%; padding: 15px; border: 2px solid #f1f5f9; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
 .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.btn-generate-main { width: 100%; padding: 18px; background: #1e40af; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; }
-.btn-generate-main:hover { background: #1d4ed8; transform: translateY(-3px); }
-.separator { text-align: center; margin: 25px 0; position: relative; }
-.separator::before { content: ""; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: #e2e8f0; z-index: 1; }
-.separator span { background: white; padding: 0 15px; position: relative; z-index: 2; color: #94a3b8; font-size: 0.8rem; font-weight: bold; }
-.btn-import-home { width: 100%; padding: 16px; background: #f59e0b; color: white; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-.btn-import-home:hover { background: #d97706; transform: translateY(-3px); }
-@media (max-width: 900px) { .dashboard-home { flex-direction: column; overflow-y: auto; } .welcome-sidebar { padding: 40px; text-align: center; } }
+.btn-generate-main { width: 100%; padding: 18px; background: #1e40af; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+.separator { text-align: center; margin: 25px 0; color: #94a3b8; font-size: 0.8rem; font-weight: bold; }
+.btn-import-home { width: 100%; padding: 16px; background: #f59e0b; color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+@media (max-width: 900px) { .dashboard-home { flex-direction: column; } .welcome-sidebar { padding: 40px; text-align: center; } }

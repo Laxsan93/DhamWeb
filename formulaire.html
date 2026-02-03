@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=2.6">
+    <link rel="stylesheet" href="formulaire.css?v=2.7">
 </head>
 <body>
 <div id="document-container">
     <div class="header-main">
         <div class="logo-area"><img src="ETFlogo.png" alt="ETF" id="etf-logo"></div>
-        <div class="title-area">
-            <h2>SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2>
-            <p id="monthYearHeader" class="highlight-date"></p>
-        </div>
+        <div class="title-area"><h2>SUIVI DE LA CHARGE DE TRAVAIL DES SALARIÉS</h2><p id="monthYearHeader" class="highlight-date"></p></div>
     </div>
     <div class="info-block">
         <div class="info-row">
@@ -29,62 +26,41 @@
     <div class="vigilance-container-blue">
         <h3 class="vigilance-title-red">POINTS DE VIGILANCE</h3>
         <ul class="vigilance-list-green">
-            <li><i class="fa-solid fa-check"></i><span>Repos quotidien de 11h et hebdomadaire de 35h impératif.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Charge de travail raisonnable et bonne répartition.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Bonne articulation vie pro / vie perso.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Formation : code "P" + précisions en observations.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Repos quotidien de 11h et hebdomadaire de 35h obligatoire.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Veiller à une charge de travail raisonnable.</span></li>
         </ul>
     </div>
-
     <div class="transport-section">
         <span class="transport-title">Pass NAVIGO :</span>
-        <div class="nav-flex">
-            <div class="nav-radio-group">
-                <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
-                <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
-            </div>
-            <span class="nav-separator">| Si OUI :</span>
-            <div class="nav-check-group">
-                <label><input type="checkbox" id="nav-hebdo"> Hebdo.</label>
-                <label><input type="checkbox" id="nav-mens"> Mensuel</label>
-                <label><input type="checkbox" id="nav-ann"> Annuel</label>
-            </div>
+        <div class="navigo-row">
+            <label><input type="radio" name="nav" id="nav-no"> NON</label>
+            <label><input type="radio" name="nav" id="nav-yes"> OUI</label>
+            <span class="spacer">| Si OUI :</span>
+            <label><input type="checkbox" id="nav-hebdo"> Hebdo.</label>
+            <label><input type="checkbox" id="nav-mens"> Mensuel</label>
+            <label><input type="checkbox" id="nav-ann"> Annuel</label>
         </div>
     </div>
-
     <div class="quick-fill-bar no-print">
-        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Auto (Lun-Ven)</button>
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide</button>
     </div>
     <div id="weeks-container"></div>
     <div class="recap-wrapper">
-        <table class="recap-table-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
-        <table class="recap-table-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
+        <table class="recap-table-half"><thead><tr><th>Code</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
+        <table class="recap-table-half"><thead><tr><th>Code</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
     </div>
-    <div class="obs-container-wide">
-        <label><strong>OBSERVATIONS :</strong></label>
-        <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
-    </div>
+    <div class="obs-container-wide"><label><strong>OBSERVATIONS :</strong></label><textarea id="observations"></textarea></div>
     <div class="signature-grid">
-        <div class="sig-card">
-            <p>Le : <input type="text" id="date-emp" class="input-date" placeholder="JJ/MM/AAAA"></p>
-            <p><strong>Signature du salarié :</strong></p>
-            <canvas id="canvas-emp" width="350" height="90"></canvas>
-            <button class="no-print btn-clear" onclick="clearCanvas('canvas-emp')">Effacer</button>
-        </div>
-        <div class="sig-card">
-            <p>Le : <input type="text" id="date-mgr" class="input-date" placeholder="JJ/MM/AAAA"></p>
-            <p><strong>Signature du Responsable :</strong></p>
-            <canvas id="canvas-mgr" width="350" height="90"></canvas>
-            <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
-        </div>
+        <div class="sig-card"><p>Signature salarié :</p><canvas id="canvas-emp" width="350" height="90"></canvas><button class="no-print" onclick="clearCanvas('canvas-emp')">Effacer</button></div>
+        <div class="sig-card"><p>Signature Responsable :</p><canvas id="canvas-mgr" width="350" height="90"></canvas><button class="no-print" onclick="clearCanvas('canvas-mgr')">Effacer</button></div>
     </div>
     <div class="actions no-print">
         <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF</button>
-        <button onclick="partagerJSON()" class="btn-share"><i class="fa-solid fa-share-nodes"></i> Partager</button>
-        <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-file-export"></i> Sauvegarder</button>
+        <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-download"></i> Télécharger</button>
+        <button onclick="partagerJson()" class="btn-share"><i class="fa-solid fa-share-nodes"></i> Partager JSON</button>
         <button onclick="window.location.href='index.html'" class="btn-back">Accueil</button>
     </div>
 </div>
-<script src="formulaire.js?v=2.6"></script>
+<script src="formulaire.js?v=2.7"></script>
 </body>
 </html>
