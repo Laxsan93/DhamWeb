@@ -62,7 +62,37 @@ function handleUpdate(type, id, w) {
     sumWeek(w); updateRecap();
 }
 
-/* SIGNATURE FIXE (VOTRE VERSION ANCIENNE) */
+/* NOUVELLE FONCTION DE PARTAGE NATIF */
+async function partagerJSON() {
+    const vals = {}; 
+    document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { 
+        if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; 
+    });
+    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
+    const fileName = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`;
+    const file = new File([JSON.stringify(data)], fileName, { type: 'application/json' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({
+                files: [file],
+                title: 'Rapport ETF',
+                text: 'Voici mon rapport d\'activité ETF pour le mois de ' + months[globalConfig.month]
+            });
+        } catch (err) { console.error("Erreur de partage:", err); }
+    } else {
+        alert("Le partage de fichier n'est pas supporté par votre navigateur. Utilisez le bouton 'Sauvegarder'.");
+    }
+}
+
+function exporterDonnees() {
+    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
+    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
+    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`; a.click();
+}
+
 function initSignature(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
@@ -78,15 +108,6 @@ function initSignature(id) {
     canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false});
 }
 
-function autoRemplir() {
-    document.querySelectorAll('.code-select').forEach(select => {
-        const d = parseInt(select.getAttribute('data-day'));
-        const dayW = new Date(globalConfig.year, globalConfig.month, d).getDay();
-        if (dayW >= 1 && dayW <= 5) { select.value = "P"; handleUpdate(globalConfig.type, d, 0); }
-    });
-    for(let i=0; i<6; i++) sumWeek(i); updateRecap();
-}
-
 function sumWeek(w) {
     const tables = document.querySelectorAll('table:not(.recap-table-half)');
     let sv = 0, se = 0;
@@ -98,18 +119,9 @@ function sumWeek(w) {
     }
 }
 
-function exporterDonnees() {
-    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
-    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
-    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-    a.download = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`; a.click();
-}
-
 function restaurerDonnees(data) {
     for (let id in data.values) {
-        const el = document.getElementById(id);
-        if (el) { if(el.tagName === 'TD') el.innerText = data.values[id]; else el.value = data.values[id]; }
+        const el = document.getElementById(id); if (el) { if(el.tagName === 'TD') el.innerText = data.values[id]; else el.value = data.values[id]; }
     }
     document.getElementById('nav-yes').checked = data.nav.yes; document.getElementById('nav-hebdo').checked = data.nav.h;
     document.getElementById('nav-mens').checked = data.nav.m; document.getElementById('nav-ann').checked = data.nav.a;
@@ -133,5 +145,13 @@ function updateRecap() {
     }
     let tr = 0; document.querySelectorAll(`[id^='e-']`).forEach(cell => tr += parseInt(cell.innerText) || 0);
     document.getElementById('count-TR').innerText = tr;
+}
+function autoRemplir() {
+    document.querySelectorAll('.code-select').forEach(select => {
+        const d = parseInt(select.getAttribute('data-day'));
+        const dayW = new Date(globalConfig.year, globalConfig.month, d).getDay();
+        if (dayW >= 1 && dayW <= 5) { select.value = "P"; handleUpdate(globalConfig.type, d, 0); }
+    });
+    for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0,0,400,200); }

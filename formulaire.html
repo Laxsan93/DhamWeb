@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=2.5">
+    <link rel="stylesheet" href="formulaire.css?v=2.6">
 </head>
 <body>
 <div id="document-container">
@@ -29,27 +29,31 @@
     <div class="vigilance-container-blue">
         <h3 class="vigilance-title-red">POINTS DE VIGILANCE</h3>
         <ul class="vigilance-list-green">
-            <li><i class="fa-solid fa-check"></i><span>Chaque salarié doit impérativement bénéficier d'un repos quotidien de 11h et hebdomadaire de 35h.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Veiller à ce que la charge de travail soit raisonnable et permette une bonne répartition.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Veiller à une bonne articulation activité professionnelle et vie personnelle.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Pour les formations, utilisez le code "P" et indiquez les dates en observations.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Repos quotidien de 11h et hebdomadaire de 35h impératif.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Charge de travail raisonnable et bonne répartition.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Bonne articulation vie pro / vie perso.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Formation : code "P" + précisions en observations.</span></li>
         </ul>
     </div>
+
     <div class="transport-section">
         <span class="transport-title">Pass NAVIGO :</span>
-        <div class="navigo-group">
-            <label><input type="radio" name="nav" id="nav-no"> NON</label>
-            <label><input type="radio" name="nav" id="nav-yes"> OUI</label>
-        </div>
-        <span class="spacer">| Si OUI :</span>
-        <div class="navigo-options">
-            <label><input type="checkbox" id="nav-hebdo"> Hebdo.</label>
-            <label><input type="checkbox" id="nav-mens"> Mensuel</label>
-            <label><input type="checkbox" id="nav-ann"> Annuel</label>
+        <div class="nav-flex">
+            <div class="nav-radio-group">
+                <input type="radio" name="nav" id="nav-no"> <label for="nav-no">NON</label>
+                <input type="radio" name="nav" id="nav-yes"> <label for="nav-yes">OUI</label>
+            </div>
+            <span class="nav-separator">| Si OUI :</span>
+            <div class="nav-check-group">
+                <label><input type="checkbox" id="nav-hebdo"> Hebdo.</label>
+                <label><input type="checkbox" id="nav-mens"> Mensuel</label>
+                <label><input type="checkbox" id="nav-ann"> Annuel</label>
+            </div>
         </div>
     </div>
+
     <div class="quick-fill-bar no-print">
-        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Auto (Lun-Ven)</button>
     </div>
     <div id="weeks-container"></div>
     <div class="recap-wrapper">
@@ -69,17 +73,18 @@
         </div>
         <div class="sig-card">
             <p>Le : <input type="text" id="date-mgr" class="input-date" placeholder="JJ/MM/AAAA"></p>
-            <p><strong>Signature du Responsable Hiérarchique :</strong></p>
+            <p><strong>Signature du Responsable :</strong></p>
             <canvas id="canvas-mgr" width="350" height="90"></canvas>
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
         </div>
     </div>
     <div class="actions no-print">
-        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF Final</button>
-        <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-file-export"></i> Exporter Rapport</button>
-        <button onclick="window.location.href='index.html'" class="btn-back"><i class="fa-solid fa-house"></i> Accueil</button>
+        <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+        <button onclick="partagerJSON()" class="btn-share"><i class="fa-solid fa-share-nodes"></i> Partager</button>
+        <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-file-export"></i> Sauvegarder</button>
+        <button onclick="window.location.href='index.html'" class="btn-back">Accueil</button>
     </div>
 </div>
-<script src="formulaire.js?v=2.5"></script>
+<script src="formulaire.js?v=2.6"></script>
 </body>
 </html>
