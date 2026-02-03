@@ -11,7 +11,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* VIGILANCE COLORS */
+/* VIGILANCE COLORS FIXED */
 .vigilance-container-blue { background: #fff; padding: 10px 15px; }
 .vigilance-title-red { color: #ff0000; text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; }
 .vigilance-list-green { list-style: none; padding: 0 5px; margin: 0; }
@@ -48,7 +48,7 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 
 @media (max-width: 600px) { .info-row { flex-direction: column; } .signature-grid { grid-template-columns: 1fr; } .recap-wrapper { flex-direction: column; } }
 
-/* --- OPTIMISATION PDF IPHONE (2 PAGES) --- */
+/* --- FIX FINAL PDF IPHONE (2 PAGES @ 70%) --- */
 @media print {
     @page { size: A4; margin: 0.5cm; }
     body { background: white !important; }
@@ -58,8 +58,8 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
-        /* Échelle réduite à 0.9 pour forcer le passage à 2 pages sur iPhone */
-        transform: scale(0.90); 
+        /* Échelle réduite à 0.70 suite aux tests iPhone utilisateur */
+        transform: scale(0.70); 
         transform-origin: top left;
     }
     .no-print { display: none !important; }
