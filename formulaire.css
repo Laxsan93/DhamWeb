@@ -44,3 +44,14 @@ canvas { border: 1px dashed #ccc; background: #fafafa; display: block; margin-to
 .btn-save { background: #8b5cf6; }
 .btn-back { background: #64748b; }
 @media print { .no-print { display: none !important; } #document-container { width: 21cm !important; max-width: none !important; margin: 0; box-shadow: none; padding: 0.2cm; } canvas { border: none !important; } .vigilance-container-blue { border: 2px solid #1e40af !important; -webkit-print-color-adjust: exact; } }
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Défilement fluide sur iOS */
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    table {
+        min-width: 600px; /* Empêche le tableau de devenir trop petit */
+    }
+}
