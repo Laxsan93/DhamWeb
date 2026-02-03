@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saisie Rapport ETF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="formulaire.css?v=2.9">
+    <link rel="stylesheet" href="formulaire.css?v=3.0">
 </head>
 <body>
 <div id="document-container">
@@ -16,7 +16,6 @@
             <p id="monthYearHeader" class="highlight-date"></p>
         </div>
     </div>
-
     <div class="info-block">
         <div class="info-row">
             <div class="field"><span>Nom :</span><input type="text" id="nom"></div>
@@ -27,16 +26,14 @@
             <div class="field"><span>Matricule :</span><input type="text" id="matricule"></div>
         </div>
     </div>
-
     <div class="vigilance-container-blue">
         <h3 class="vigilance-title-red">POINTS DE VIGILANCE</h3>
         <ul class="vigilance-list-green">
-            <li><i class="fa-solid fa-check"></i><span>Repos quotidien de 11h et hebdomadaire de 35h obligatoire.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Veiller à ce que la charge de travail soit raisonnable.</span></li>
-            <li><i class="fa-solid fa-check"></i><span>Pour les formations, utilisez le code "P" et précisez en observations.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Chaque salarié doit impérativement bénéficier d'un repos quotidien de 11h et hebdomadaire de 35h.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Veiller à ce que la charge de travail soit raisonnable et permette une bonne répartition.</span></li>
+            <li><i class="fa-solid fa-check"></i><span>Pour les formations, utilisez le code "P" et indiquez les dates en observations.</span></li>
         </ul>
     </div>
-
     <div class="transport-section">
         <span class="transport-title">Pass NAVIGO :</span>
         <div class="navigo-flex-container">
@@ -48,31 +45,18 @@
             <label><input type="checkbox" id="nav-ann"> Annuel</label>
         </div>
     </div>
-
     <div class="quick-fill-bar no-print">
-        <button onclick="autoRemplir()" class="btn-quick">
-            <i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)
-        </button>
+        <button onclick="autoRemplir()" class="btn-quick"><i class="fa-solid fa-bolt"></i> Remplissage Rapide (Lun-Ven : Présence / 7h)</button>
     </div>
-
     <div id="weeks-container"></div>
-
     <div class="recap-wrapper">
-        <table class="recap-table-half">
-            <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-            <tbody id="recap-body-1"></tbody>
-        </table>
-        <table class="recap-table-half">
-            <thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead>
-            <tbody id="recap-body-2"></tbody>
-        </table>
+        <table class="recap-table-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-1"></tbody></table>
+        <table class="recap-table-half"><thead><tr><th>Code</th><th>Libellé</th><th>Total</th></tr></thead><tbody id="recap-body-2"></tbody></table>
     </div>
-
     <div class="obs-container-wide">
         <label><strong>OBSERVATIONS :</strong></label>
         <textarea id="observations" placeholder="Formations, commentaires..."></textarea>
     </div>
-
     <div class="signature-grid">
         <div class="sig-card">
             <p>Le : <input type="text" id="date-emp" class="input-date" placeholder="JJ/MM/AAAA"></p>
@@ -87,7 +71,6 @@
             <button class="no-print btn-clear" onclick="clearCanvas('canvas-mgr')">Effacer</button>
         </div>
     </div>
-
     <div class="actions no-print">
         <button onclick="window.print()" class="btn-print"><i class="fa-solid fa-file-pdf"></i> PDF Final</button>
         <button onclick="exporterDonnees()" class="btn-save"><i class="fa-solid fa-download"></i> Télécharger</button>
@@ -95,6 +78,6 @@
         <button onclick="window.location.href='index.html'" class="btn-back">Accueil</button>
     </div>
 </div>
-<script src="formulaire.js?v=2.9"></script>
+<script src="formulaire.js?v=3.0"></script>
 </body>
 </html>

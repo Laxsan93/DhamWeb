@@ -57,11 +57,8 @@ function handleUpdate(type, id, w) {
     const code = document.getElementById(`c-${id}`).value;
     let v = 0; if (code === "P" || code === "TT" || code === "JF") v = (type==='DHAM'?7:1); else if (code === "Demi P") v = (type==='DHAM'?3.5:0.5);
     document.getElementById(`v-${id}`).innerText = v;
-    
-    // Règle Ticket Restaurant : uniquement Présence ou Télétravail
     let e = (code === "P" || code === "TT") ? 1 : 0;
     document.getElementById(`e-${id}`).innerText = e;
-    
     sumWeek(w); updateRecap();
 }
 
@@ -95,7 +92,6 @@ function initRecapTables() {
     const p1 = ["P", "TT", "CP", "RTT", "M", "AT/MP", "EV"];
     for (let c of p1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`;
     for (let c in allCodes) { if(!p1.includes(c)) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`; }
-    // Ajout ligne TR
     b2.innerHTML += `<tr style="background:#f1f5f9"><td><strong>TR</strong></td><td><strong>Tickets Restaurant</strong></td><td id="count-TR">0</td></tr>`;
 }
 
