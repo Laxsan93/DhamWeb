@@ -1,40 +1,44 @@
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f9; overflow-x: hidden; }
 #document-container { background: white; margin: 10px auto; padding: 0.6cm; width: 98%; max-width: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+
 .header-main, .info-block, .vigilance-container-blue, .transport-section { border: 2.2px solid #1e40af; margin-bottom: 5px; }
 .header-main { display: grid; grid-template-columns: 120px 1fr; }
 .logo-area { border-right: 2.2px solid #1e40af; display: flex; align-items: center; justify-content: center; padding: 5px; }
 #etf-logo { max-width: 100px; }
 .title-area { text-align: center; color: #1e40af; padding: 5px; }
+
 .info-row { display: flex; gap: 20px; padding: 5px 10px; }
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* FIX NAVIGO */
 .transport-section { padding: 8px; font-size: 11px; }
 .navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
-.navigo-flex-container label { white-space: nowrap; display: flex; align-items: center; gap: 3px; }
 
-/* BOUTON BLEU (ANCIENNE VERSION) */
+/* BOUTON BLEU ANCIENNE VERSION */
 .quick-fill-bar { background: #eff6ff; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px dashed #3b82f6; }
 .btn-quick { background: #1e40af; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
 
-/* TABLEAUX */
+/* TABLEAUX ET WRAPPER MOBILE */
 .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 10px; }
 table { width: 100%; min-width: 850px; border-collapse: collapse; table-layout: fixed; }
 th, td { border: 1px solid #000; height: 26px; text-align: center; font-size: 11px; }
 th { background: #1e40af !important; color: #fff !important; }
+.row-label { background: #f9f9f9 !important; text-align: left; padding-left: 6px; width: 150px; font-weight: bold; }
 
-/* RECAP TABLE (STACK ON MOBILE) */
+/* RECAPITULATIF ADAPTATIF */
 .recap-wrapper { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-.recap-table-half { flex: 1; min-width: 280px; }
+.recap-table-half { flex: 1; min-width: 280px; font-size: 10px; }
+.recap-table-half th { background: #475569 !important; }
 
-/* OBSERVATIONS (CORRECTED) */
-.obs-container-wide { margin-top: 15px; display: flex; flex-direction: column; gap: 5px; }
+/* OBSERVATIONS ADAPTATIVES */
+.obs-container-wide { margin-top: 15px; display: flex; flex-direction: column; gap: 5px; width: 100%; }
 textarea { width: 100%; height: 80px; border: 1.5px solid #000; padding: 10px; font-size: 12px; resize: none; box-sizing: border-box; }
 
+/* SIGNATURES ET DATES */
 .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
 .sig-card { border: 1.5px solid #000; padding: 8px; text-align: center; }
+.input-date { border: none; border-bottom: 1px solid #000; width: 90px; font-size: 11px; outline: none; text-align: center; }
 canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px; cursor: crosshair; }
 
 .actions { padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }

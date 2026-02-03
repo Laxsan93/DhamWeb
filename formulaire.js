@@ -24,24 +24,31 @@ function renderCalendar(year, month, type) {
     const container = document.getElementById('weeks-container'); container.innerHTML = "";
     let firstDay = new Date(year, month, 1); let dayOffset = firstDay.getDay() || 7; 
     let currentDay = 1; let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let labelExtra = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb TR');
+
     for (let w = 0; w < 6; w++) {
         if (currentDay > daysInMonth) break;
         let wrapper = document.createElement('div'); wrapper.className = "table-wrapper"; 
         let table = document.createElement('table');
-        let html = `<tr><th style="width:160px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th style="width:60px">Hebdo.</th></tr>`;
-        let rDate = `<tr><td style="text-align:left;padding-left:5px">Date</td>`; let rCode = `<tr><td style="text-align:left;padding-left:5px">Codes</td>`;
-        let rVal = `<tr><td style="text-align:left;padding-left:5px">${type==='DHAM'?'Heures':'Jours'}</td>`;
+        let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th style="width:60px">Hebdo.</th></tr>`;
+        let rDate = `<tr><td class="row-label">Date</td>`;
+        let rCode = `<tr><td class="row-label">Codes</td>`;
+        let rVal = `<tr><td class="row-label">${type==='DHAM'?'Heures':'Jours'}</td>`;
+        let rExtra = `<tr><td class="row-label">${labelExtra}</td>`;
+
         for (let d = 1; d <= 7; d++) {
             if ((w === 0 && d < dayOffset) || currentDay > daysInMonth) {
-                const c = `<td></td>`; rDate += c; rCode += c; rVal += c;
+                const c = `<td></td>`; rDate += c; rCode += c; rVal += c; rExtra += c;
             } else {
                 let id = currentDay;
                 rDate += `<td>${id}</td>`;
-                rCode += `<td><select class="code-select" id="c-${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
-                rVal += `<td id="v-${id}">0</td>`; currentDay++;
+                rCode += `<td><select class="code-select" id="c-${id}" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
+                rVal += `<td id="v-${id}">0</td>`;
+                rExtra += `<td id="e-${id}">0</td>`; 
+                currentDay++;
             }
         }
-        table.innerHTML = html + rDate + `<td>Total</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}">0</td></tr>`;
+        table.innerHTML = html + rDate + `<td>Total</td></tr>` + rCode + `<td>-</td></tr>` + rVal + `<td id="tv-w${w}">0</td></tr>` + rExtra + `<td id="te-w${w}">0</td></tr>`;
         wrapper.appendChild(table); container.appendChild(wrapper);
     }
 }
@@ -49,7 +56,13 @@ function renderCalendar(year, month, type) {
 function handleUpdate(type, id, w) {
     const code = document.getElementById(`c-${id}`).value;
     let v = 0; if (code === "P" || code === "TT" || code === "JF") v = (type==='DHAM'?7:1); else if (code === "Demi P") v = (type==='DHAM'?3.5:0.5);
-    document.getElementById(`v-${id}`).innerText = v; sumWeek(w); updateRecap();
+    document.getElementById(`v-${id}`).innerText = v;
+    
+    // Règle Ticket Restaurant : uniquement Présence ou Télétravail
+    let e = (code === "P" || code === "TT") ? 1 : 0;
+    document.getElementById(`e-${id}`).innerText = e;
+    
+    sumWeek(w); updateRecap();
 }
 
 function initSignature(id) {
@@ -69,25 +82,44 @@ function initSignature(id) {
 
 function sumWeek(w) {
     const tables = document.querySelectorAll('.table-wrapper table');
-    let sv = 0; tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.innerText) || 0);
+    let sv = 0, se = 0;
+    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.innerText) || 0);
+    tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
     document.getElementById(`tv-w${w}`).innerText = sv;
+    document.getElementById(`te-w${w}`).innerText = se;
 }
 
-async function partagerJson() {
-    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
-    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
-    const jsonStr = JSON.stringify(data);
-    const fileName = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`;
-    if (navigator.share) {
-        try {
-            const file = new File([jsonStr], fileName, { type: "application/json" });
-            await navigator.share({ files: [file], title: 'Mon Rapport ETF', text: 'Partage du rapport JSON.' });
-        } catch (err) { console.error(err); }
-    } else { alert("Partage non supporté."); }
+function initRecapTables() {
+    const b1 = document.getElementById('recap-body-1'); const b2 = document.getElementById('recap-body-2');
+    b1.innerHTML = ""; b2.innerHTML = "";
+    const p1 = ["P", "TT", "CP", "RTT", "M", "AT/MP", "EV"];
+    for (let c of p1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`;
+    for (let c in allCodes) { if(!p1.includes(c)) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`; }
+    // Ajout ligne TR
+    b2.innerHTML += `<tr style="background:#f1f5f9"><td><strong>TR</strong></td><td><strong>Tickets Restaurant</strong></td><td id="count-TR">0</td></tr>`;
+}
+
+function updateRecap() {
+    for (let c in allCodes) {
+        let count = 0; document.querySelectorAll('.code-select').forEach(s => { if(s.value === c) count += (c === "Demi P" ? 0.5 : 1); });
+        const el = document.getElementById(`count-${c}`); if(el) el.innerText = count;
+    }
+    let tr = 0; document.querySelectorAll(`[id^='e-']`).forEach(cell => tr += parseInt(cell.innerText) || 0);
+    document.getElementById('count-TR').innerText = tr;
+}
+
+function autoRemplir() {
+    const year = parseInt(globalConfig.year); const month = parseInt(globalConfig.month);
+    document.querySelectorAll('.code-select').forEach(select => {
+        const day = parseInt(select.getAttribute('data-day'));
+        const dayOfWeek = new Date(year, month, day).getDay();
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) { select.value = "P"; handleUpdate(globalConfig.type, day, 0); }
+    });
+    for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
 
 function exporterDonnees() {
-    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
+    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
     const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
     const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
@@ -104,26 +136,17 @@ function restaurerDonnees(data) {
     for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
 
-function initRecapTables() {
-    const b1 = document.getElementById('recap-body-1'); const b2 = document.getElementById('recap-body-2');
-    b1.innerHTML = ""; b2.innerHTML = "";
-    const p1 = ["P", "TT", "CP", "RTT", "M", "AT/MP", "EV"];
-    for (let c of p1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td id="count-${c}">0</td></tr>`;
-    for (let c in allCodes) { if(!p1.includes(c)) b2.innerHTML += `<tr><td><strong>${c}</strong></td><td id="count-${c}">0</td></tr>`; }
+async function partagerJson() {
+    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
+    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
+    const jsonStr = JSON.stringify(data);
+    const fileName = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`;
+    if (navigator.share) {
+        try {
+            const file = new File([jsonStr], fileName, { type: "application/json" });
+            await navigator.share({ files: [file], title: 'Mon Rapport ETF', text: 'Partage du rapport JSON.' });
+        } catch (err) { console.error(err); }
+    } else { alert("Partage non supporté."); }
 }
 
-function updateRecap() {
-    for (let c in allCodes) {
-        let count = 0; document.querySelectorAll('.code-select').forEach(s => { if(s.value === c) count += (c === "Demi P" ? 0.5 : 1); });
-        const el = document.getElementById(`count-${c}`); if(el) el.innerText = count;
-    }
-}
-function autoRemplir() {
-    document.querySelectorAll('.code-select').forEach(select => {
-        const d = parseInt(select.id.split('-')[1]);
-        const dayW = new Date(globalConfig.year, globalConfig.month, d).getDay();
-        if (dayW >= 1 && dayW <= 5) { select.value = "P"; handleUpdate(globalConfig.type, d, 0); }
-    });
-    for(let i=0; i<6; i++) sumWeek(i); updateRecap();
-}
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0,0,400,200); }
