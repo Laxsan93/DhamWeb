@@ -11,7 +11,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .field { display: flex; flex: 1; align-items: center; gap: 5px; font-size: 11px; }
 .field input { border: none; border-bottom: 1px solid #000; flex: 1; outline: none; }
 
-/* VIGILANCE COLORS FIXED */
+/* VIGILANCE COLORS */
 .vigilance-container-blue { background: #fff; padding: 10px 15px; }
 .vigilance-title-red { color: #ff0000; text-align: center; text-decoration: underline; margin: 5px 0; font-size: 13px; font-weight: bold; }
 .vigilance-list-green { list-style: none; padding: 0 5px; margin: 0; }
@@ -21,6 +21,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .transport-section { padding: 8px; font-size: 11px; }
 .navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
+.navigo-flex-container label { white-space: nowrap; cursor: pointer; }
 
 .quick-fill-bar { background: #eff6ff; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px dashed #3b82f6; }
 .btn-quick { background: #1e40af; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
@@ -48,7 +49,7 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 
 @media (max-width: 600px) { .info-row { flex-direction: column; } .signature-grid { grid-template-columns: 1fr; } .recap-wrapper { flex-direction: column; } }
 
-/* --- FIX FINAL PDF IPHONE (2 PAGES @ 70%) --- */
+/* --- IMPRESSION PDF (Remise à 100%) --- */
 @media print {
     @page { size: A4; margin: 0.5cm; }
     body { background: white !important; }
@@ -58,8 +59,8 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
         margin: 0 !important;
         padding: 0 !important;
         box-shadow: none !important;
-        /* Échelle réduite à 0.70 suite aux tests iPhone utilisateur */
-        transform: scale(0.70); 
+        /* Remis à l'échelle de base */
+        transform: scale(1.0); 
         transform-origin: top left;
     }
     .no-print { display: none !important; }
