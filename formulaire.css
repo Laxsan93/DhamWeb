@@ -1,19 +1,18 @@
 body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f9; color: #000; overflow-x: hidden; }
 #document-container { background: white; margin: 10px auto; padding: 0.6cm; width: 98%; max-width: 1100px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
 
-/* STRUCTURE CADRES */
 .header-main, .info-block, .vigilance-container-blue, .transport-section { border: 2.2px solid #1e40af; margin-bottom: 5px; }
 .header-main { display: grid; grid-template-columns: 120px 1fr; }
 .logo-area { border-right: 2.2px solid #1e40af; display: flex; align-items: center; justify-content: center; padding: 5px; }
 #etf-logo { max-width: 100px; }
 .title-area { text-align: center; color: #1e40af; padding: 5px; }
 
-/* FIX OVERFLOW INFO BLOCK (NOM, SERVICE...) */
+/* FIX DÉBORDEMENT INFO BLOCK */
 .info-block { padding: 10px; }
-.info-row { display: flex; gap: 20px; flex-wrap: wrap; } /* Force le retour à la ligne si trop long */
-.field { display: flex; flex: 1; min-width: 250px; align-items: center; gap: 8px; font-size: 11px; }
+.info-row { display: flex; gap: 20px; flex-wrap: wrap; } 
+.field { display: flex; flex: 1; min-width: 200px; align-items: center; gap: 5px; font-size: 11px; }
 .field span { font-weight: bold; color: #1e40af; white-space: nowrap; }
-.field input { border: none; border-bottom: 1.2px solid #000; flex: 1; font-size: 12px; outline: none; min-width: 0; } /* min-width: 0 empêche le flex-grow de déborder */
+.field input { border: none; border-bottom: 1px solid #000; flex: 1; font-size: 12px; outline: none; min-width: 0; }
 
 /* VIGILANCE COLORS */
 .vigilance-container-blue { background: #fff; padding: 10px 15px; }
@@ -26,6 +25,7 @@ body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f1f5f
 .navigo-flex-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .transport-title { font-weight: bold; color: #1e40af; }
 
+/* BOUTON REMPLISSAGE BLEU */
 .quick-fill-bar { background: #eff6ff; padding: 8px; margin-bottom: 8px; border-radius: 5px; border: 1px dashed #3b82f6; }
 .btn-quick { background: #1e40af; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 8px; }
 
@@ -49,27 +49,22 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 
 /* BOUTONS COLORÉS BAS DE PAGE */
 .actions { padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.actions button { padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.actions button { padding: 12px 25px; border-radius: 10px; border: none; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
 .btn-print { background: #10b981; } /* VERT */
 .btn-save { background: #8b5cf6; } /* VIOLET */
 .btn-share { background: #3b82f6; } /* BLEU CLAIR */
 .btn-back { background: #64748b; } /* GRIS */
 
-@media (max-width: 600px) { 
-    .field { min-width: 100%; }
-    .signature-grid { grid-template-columns: 1fr; } 
-    .recap-wrapper { flex-direction: column; }
-}
-
 /* --- OPTIMISATION IMPRESSION --- */
 @media print {
     @page { size: A4; margin: 0.5cm; }
-    #document-container { width: 100% !important; max-width: none !important; margin: 0 !important; transform: scale(1.0); transform-origin: top left; }
+    body { background: white !important; }
+    #document-container { width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; transform: scale(1.0); transform-origin: top left; }
     .no-print { display: none !important; }
     .table-wrapper { overflow: visible !important; }
     table { width: 100% !important; min-width: 0 !important; page-break-inside: avoid; }
     
-    /* CACHE LES FLÈCHES DU MENU DÉROULANT UNIQUEMENT AU PDF */
+    /* MASQUER LES ICÔNES DE MENU DÉROULANT */
     select.code-select {
         appearance: none;
         -webkit-appearance: none;
@@ -78,7 +73,10 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
         border: none !important;
         text-align-last: center;
         width: 100%;
+        color: #000 !important;
     }
+
+    .signature-grid, .recap-wrapper, .vigilance-container-blue { page-break-inside: avoid; }
     .vigilance-container-blue { border: 2.2px solid #1e40af !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .vigilance-title-red { color: #ff0000 !important; }
     .vigilance-list-green li, .vigilance-list-green i { color: #008000 !important; }
