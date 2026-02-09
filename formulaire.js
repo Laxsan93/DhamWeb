@@ -45,7 +45,6 @@ function renderCalendar(year, month, type) {
         if (currentDay > daysInMonth) break;
         let wrapper = document.createElement('div'); wrapper.className = "table-wrapper"; 
         let table = document.createElement('table');
-        // Les TH sont bleus (style CSS par défaut)
         let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th style="width:60px">Hebdo.</th></tr>`;
         let rDate = `<tr><td class="row-label">Date</td>`, rCode = `<tr><td class="row-label">Codes</td>`, rVal = `<tr><td class="row-label">${labelH}</td>`, rExtra = `<tr><td class="row-label">${labelE}</td>`;
 
