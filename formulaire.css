@@ -35,6 +35,9 @@ th, td { border: 1px solid #000; height: 26px; text-align: center; font-size: 11
 th { background: #1e40af !important; color: #fff !important; }
 .row-label { background: #f9f9f9 !important; text-align: left; padding-left: 6px; width: 150px; font-weight: bold; }
 
+/* TAILLE RÉDUITE POUR DHAM (3 CARACTERES) */
+.val-input { width: 35px; border: 1px solid #ccc; border-radius: 3px; text-align: center; font-weight: bold; font-size: 11px; }
+
 .recap-wrapper { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
 .recap-table-half { flex: 1; min-width: 280px; font-size: 10px; }
 .recap-table-half th { background: #475569 !important; }
@@ -49,7 +52,7 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
 
 /* BOUTONS COLORÉS BAS DE PAGE */
 .actions { padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.actions button { padding: 12px 25px; border-radius: 10px; border: none; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
+.actions button { padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
 .btn-print { background: #10b981; } /* VERT */
 .btn-save { background: #8b5cf6; } /* VIOLET */
 .btn-share { background: #3b82f6; } /* BLEU CLAIR */
@@ -65,16 +68,7 @@ canvas { background: #fafafa; border: 1px dashed #ccc; width: 100%; height: 90px
     table { width: 100% !important; min-width: 0 !important; page-break-inside: avoid; }
     
     /* MASQUER LES ICÔNES DE MENU DÉROULANT */
-    select.code-select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background: transparent !important;
-        border: none !important;
-        text-align-last: center;
-        width: 100%;
-        color: #000 !important;
-    }
+    select.code-select { appearance: none; -webkit-appearance: none; background: transparent !important; border: none !important; text-align-last: center; width: 100%; color: #000 !important; }
 
     .signature-grid, .recap-wrapper, .vigilance-container-blue { page-break-inside: avoid; }
     .vigilance-container-blue { border: 2.2px solid #1e40af !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }

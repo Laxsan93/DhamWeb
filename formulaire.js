@@ -24,7 +24,8 @@ function renderCalendar(year, month, type) {
     const container = document.getElementById('weeks-container'); container.innerHTML = "";
     let firstDay = new Date(year, month, 1); let dayOffset = firstDay.getDay() || 7; 
     let currentDay = 1; let daysInMonth = new Date(year, month + 1, 0).getDate();
-    let labelExtra = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb TR');
+    let labelH = (type === 'DHAM') ? 'Nb Heures' : 'Nb jours';
+    let labelE = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb TR');
 
     for (let w = 0; w < 6; w++) {
         if (currentDay > daysInMonth) break;
@@ -33,8 +34,8 @@ function renderCalendar(year, month, type) {
         let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th style="width:60px">Hebdo.</th></tr>`;
         let rDate = `<tr><td class="row-label">Date</td>`;
         let rCode = `<tr><td class="row-label">Codes</td>`;
-        let rVal = `<tr><td class="row-label">${type==='DHAM'?'Heures':'Jours'}</td>`;
-        let rExtra = `<tr><td class="row-label">${labelExtra}</td>`;
+        let rVal = `<tr><td class="row-label">${labelH}</td>`;
+        let rExtra = `<tr><td class="row-label">${labelE}</td>`;
 
         for (let d = 1; d <= 7; d++) {
             if ((w === 0 && d < dayOffset) || currentDay > daysInMonth) {
@@ -43,7 +44,13 @@ function renderCalendar(year, month, type) {
                 let id = currentDay;
                 rDate += `<td>${id}</td>`;
                 rCode += `<td><select class="code-select" id="c-${id}" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
-                rVal += `<td id="v-${id}">0</td>`;
+                
+                // RESTAURATION INPUT DHAM MODIFIABLE
+                if (type === 'DHAM') {
+                    rVal += `<td><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w});updateRecap();"></td>`;
+                } else {
+                    rVal += `<td id="v-${id}">0</td>`;
+                }
                 rExtra += `<td id="e-${id}">0</td>`; 
                 currentDay++;
             }
@@ -55,37 +62,33 @@ function renderCalendar(year, month, type) {
 
 function handleUpdate(type, id, w) {
     const code = document.getElementById(`c-${id}`).value;
-    let v = 0; if (code === "P" || code === "TT" || code === "JF") v = (type==='DHAM'?7:1); else if (code === "Demi P") v = (type==='DHAM'?3.5:0.5);
-    document.getElementById(`v-${id}`).innerText = v;
-    let e = (code === "P" || code === "TT") ? 1 : 0;
-    document.getElementById(`e-${id}`).innerText = e;
-    sumWeek(w); updateRecap();
-}
+    const vCell = document.getElementById(`v-${id}`);
+    if (!vCell) return;
+    
+    let v = 0;
+    if (code === "P" || code === "TT" || code === "JF") v = (type === 'DHAM' ? 7 : 1);
+    else if (code === "Demi P") v = (type === 'DHAM' ? 3.5 : 0.5);
 
-function initSignature(id) {
-    const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
-    ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
-    const getPos = (e) => {
-        const rect = canvas.getBoundingClientRect(); const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-        const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-        return { x: (cx - rect.left) * (canvas.width / rect.width), y: (cy - rect.top) * (canvas.height / rect.height) };
-    };
-    const start = (e) => { paint = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
-    const move = (e) => { if(!paint) return; if(e.cancelable) e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); };
-    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move);
-    window.addEventListener('mouseup', () => paint = false);
-    canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false});
+    // Gère les deux cas : Champ de saisie ou cellule texte
+    if (vCell.tagName === 'INPUT') vCell.value = v;
+    else vCell.innerText = v;
+    
+    let e = (code === "P" || code === "TT") ? 1 : 0;
+    const eCell = document.getElementById(`e-${id}`);
+    if (eCell) eCell.innerText = e;
+    
+    sumWeek(w); updateRecap();
 }
 
 function sumWeek(w) {
     const tables = document.querySelectorAll('.table-wrapper table');
+    if (!tables[w]) return;
     let sv = 0, se = 0;
-    if(tables[w]) {
-        tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.innerText) || 0);
-        tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
-        document.getElementById(`tv-w${w}`).innerText = sv;
-        document.getElementById(`te-w${w}`).innerText = se;
-    }
+    tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.value || el.innerText) || 0);
+    tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
+    const tv = document.getElementById(`tv-w${w}`);
+    const te = document.getElementById(`te-w${w}`);
+    if (tv) tv.innerText = sv; if (te) te.innerText = se;
 }
 
 function initRecapTables() {
@@ -103,7 +106,7 @@ function updateRecap() {
         const el = document.getElementById(`count-${c}`); if(el) el.innerText = count;
     }
     let tr = 0; document.querySelectorAll(`[id^='e-']`).forEach(cell => tr += parseInt(cell.innerText) || 0);
-    document.getElementById('count-TR').innerText = tr;
+    const ctr = document.getElementById('count-TR'); if(ctr) ctr.innerText = tr;
 }
 
 function autoRemplir() {
@@ -147,4 +150,18 @@ async function partagerJson() {
     } else { alert("Partage non supporté."); }
 }
 
+function initSignature(id) {
+    const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
+    ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
+    const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect(); const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        return { x: (cx - rect.left) * (canvas.width / rect.width), y: (cy - rect.top) * (canvas.height / rect.height) };
+    };
+    canvas.addEventListener('mousedown', (e) => { paint = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+    canvas.addEventListener('mousemove', (e) => { if(!paint) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+    window.addEventListener('mouseup', () => paint = false);
+    canvas.addEventListener('touchstart', (e) => { paint = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, {passive:false});
+    canvas.addEventListener('touchmove', (e) => { if(!paint) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, {passive:false});
+}
 function clearCanvas(id) { document.getElementById(id).getContext('2d').clearRect(0,0,400,200); }
