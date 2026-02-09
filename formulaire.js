@@ -39,7 +39,7 @@ function renderCalendar(year, month, type) {
     let firstDay = new Date(year, month, 1), dayOffset = firstDay.getDay() || 7; 
     let currentDay = 1, daysInMonth = new Date(year, month + 1, 0).getDate();
     let labelH = (type === 'DHAM') ? 'Nb Heures' : 'Nb jours';
-    let labelE = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb TR');
+    let labelE = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb Ticket Restaurant');
 
     for (let w = 0; w < 6; w++) {
         if (currentDay > daysInMonth) break;
