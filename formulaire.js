@@ -20,10 +20,10 @@ function getHolidays(year) {
     const monthPaques = Math.floor(n / 31), dayPaques = (n % 31) + 1;
     const dPaques = new Date(year, monthPaques - 1, dayPaques);
     const formatLocal = (d) => { return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`; };
-    const lundiPaques = new Date(dPaques); lundiPaques.setDate(dPaques.getDate() + 1);
-    const ascension = new Date(dPaques); ascension.setDate(dPaques.getDate() + 39);
-    const lundiPentecote = new Date(dPaques); lundiPentecote.setDate(dPaques.getDate() + 50);
-    holidays.push(formatLocal(lundiPaques), formatLocal(ascension), formatLocal(lundiPentecote));
+    const lundiP = new Date(dPaques); lundiP.setDate(dPaques.getDate() + 1);
+    const asc = new Date(dPaques); asc.setDate(dPaques.getDate() + 39);
+    const lundiPent = new Date(dPaques); lundiPent.setDate(dPaques.getDate() + 50);
+    holidays.push(formatLocal(lundiP), formatLocal(asc), formatLocal(lundiPent));
     return holidays;
 }
 
@@ -36,10 +36,8 @@ function initFormulaire(config) {
 function renderCalendar(year, month, type) {
     const container = document.getElementById('weeks-container'); container.innerHTML = "";
     const holidays = getHolidays(year);
-    let firstDay = new Date(year, month, 1);
-    let dayOffset = firstDay.getDay() || 7; 
-    let currentDay = 1;
-    let daysInMonth = new Date(year, month + 1, 0).getDate();
+    let firstDay = new Date(year, month, 1), dayOffset = firstDay.getDay() || 7; 
+    let currentDay = 1, daysInMonth = new Date(year, month + 1, 0).getDate();
     let labelH = (type === 'DHAM') ? 'Nb Heures' : 'Nb jours';
     let labelE = (type.includes('ELO')) ? 'Eloignement' : (type.includes('IGD') ? 'IGD' : 'Nb TR');
 
@@ -47,38 +45,28 @@ function renderCalendar(year, month, type) {
         if (currentDay > daysInMonth) break;
         let wrapper = document.createElement('div'); wrapper.className = "table-wrapper"; 
         let table = document.createElement('table');
-        // Th garde son bleu, on ne lui ajoute pas de classe weekend
+        // Les TH sont bleus (style CSS par défaut)
         let html = `<tr><th style="width:150px"></th><th>Lun</th><th>Mar</th><th>Mer</th><th>Jeu</th><th>Ven</th><th>Sam</th><th>Dim</th><th style="width:60px">Hebdo.</th></tr>`;
-        let rDate = `<tr><td class="row-label">Date</td>`;
-        let rCode = `<tr><td class="row-label">Codes</td>`;
-        let rVal = `<tr><td class="row-label">${labelH}</td>`;
-        let rExtra = `<tr><td class="row-label">${labelE}</td>`;
+        let rDate = `<tr><td class="row-label">Date</td>`, rCode = `<tr><td class="row-label">Codes</td>`, rVal = `<tr><td class="row-label">${labelH}</td>`, rExtra = `<tr><td class="row-label">${labelE}</td>`;
 
         for (let d = 1; d <= 7; d++) {
-            const isWeekend = (d === 6 || d === 7);
-            const weekendClass = isWeekend ? 'weekend-bg' : '';
-            
+            const isWE = (d === 6 || d === 7), weCls = isWE ? 'weekend-bg' : '';
             if ((w === 0 && d < dayOffset) || currentDay > daysInMonth) {
-                const outClass = 'out-month-bg';
-                rDate += `<td class="${outClass}"></td>`; rCode += `<td class="${outClass}"></td>`;
-                rVal += `<td class="${outClass}"></td>`; rExtra += `<td class="${outClass}"></td>`;
+                const outCls = 'out-month-bg';
+                rDate += `<td class="${outCls}"></td>`; rCode += `<td class="${outCls}"></td>`; rVal += `<td class="${outCls}"></td>`; rExtra += `<td class="${outCls}"></td>`;
             } else {
                 let id = currentDay;
                 const dateKey = `${year}${String(month + 1).padStart(2, '0')}${String(id).padStart(2, '0')}`;
-                const isHoliday = holidays.includes(dateKey);
-                
-                rDate += `<td class="${weekendClass}">${id}</td>`;
-                rCode += `<td class="${weekendClass}" id="cell-code-${id}"><select class="code-select ${weekendClass}" id="c-${id}" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})">
-                        <option value=""></option>
-                        ${Object.keys(allCodes).map(c=>`<option value="${c}" ${isHoliday && c==='JF'?'selected':''}>${c}</option>`).join('')}
-                    </select></td>`;
-                
+                const isHol = holidays.includes(dateKey);
+                rDate += `<td class="${weCls}">${id}</td>`;
+                rCode += `<td class="${weCls}" id="cell-code-${id}"><select class="code-select ${weCls}" id="c-${id}" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})">
+                        <option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}" ${isHol && c==='JF'?'selected':''}>${c}</option>`).join('')}</select></td>`;
                 if (type === 'DHAM') {
-                    rVal += `<td class="${weekendClass}"><input type="number" step="0.5" class="val-input ${weekendClass}" id="v-${id}" value="${isHoliday?0:''}" oninput="sumWeek(${w});updateRecap();"></td>`;
+                    rVal += `<td class="${weCls}"><input type="number" step="0.5" class="val-input ${weCls}" id="v-${id}" value="${isHol?0:''}" oninput="sumWeek(${w});updateRecap();"></td>`;
                 } else {
-                    rVal += `<td id="v-${id}" class="${weekendClass}">${isHoliday?0:0}</td>`;
+                    rVal += `<td id="v-${id}" class="${weCls}">${isHol?0:0}</td>`;
                 }
-                rExtra += `<td id="e-${id}" class="${weekendClass}">0</td>`; 
+                rExtra += `<td id="e-${id}" class="${weCls}">0</td>`; 
                 currentDay++;
             }
         }
@@ -93,20 +81,15 @@ function toggleHolidayStyle(dayId, isJF) {
     const el = document.getElementById(`cell-code-${dayId}`);
     if (el) {
         if (isJF) el.classList.add('holiday-bg'); else el.classList.remove('holiday-bg');
-        const inner = el.querySelector('select');
-        if (inner) { if (isJF) inner.classList.add('holiday-bg'); else inner.classList.remove('holiday-bg'); }
+        const inner = el.querySelector('select'); if (inner) { if (isJF) inner.classList.add('holiday-bg'); else inner.classList.remove('holiday-bg'); }
     }
 }
 
 function handleUpdate(type, id, w) {
-    const code = document.getElementById(`c-${id}`).value;
-    const vCell = document.getElementById(`v-${id}`);
+    const code = document.getElementById(`c-${id}`).value, vCell = document.getElementById(`v-${id}`);
     if (!vCell) return;
     toggleHolidayStyle(id, code === 'JF');
-    let v = 0;
-    if (code === "P" || code === "TT") v = (type === 'DHAM' ? 7 : 1);
-    else if (code === "Demi P") v = (type === 'DHAM' ? 3.5 : 0.5);
-    else if (code === "JF") v = 0;
+    let v = 0; if (code === "P" || code === "TT") v = (type === 'DHAM' ? 7 : 1); else if (code === "Demi P") v = (type === 'DHAM' ? 3.5 : 0.5); else if (code === "JF") v = 0;
     if (vCell.tagName === 'INPUT') vCell.value = v; else vCell.innerText = v;
     let e = (code === "P" || code === "TT") ? 1 : 0;
     const eCell = document.getElementById(`e-${id}`); if (eCell) eCell.innerText = e;
@@ -114,8 +97,7 @@ function handleUpdate(type, id, w) {
 }
 
 function sumWeek(w) {
-    const tables = document.querySelectorAll('.table-wrapper table');
-    if (!tables[w]) return;
+    const tables = document.querySelectorAll('.table-wrapper table'); if (!tables[w]) return;
     let sv = 0, se = 0;
     tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.value || el.innerText) || 0);
     tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
@@ -124,7 +106,7 @@ function sumWeek(w) {
 }
 
 function initRecapTables() {
-    const b1 = document.getElementById('recap-body-1'); const b2 = document.getElementById('recap-body-2');
+    const b1 = document.getElementById('recap-body-1'), b2 = document.getElementById('recap-body-2');
     b1.innerHTML = ""; b2.innerHTML = "";
     const p1 = ["P", "TT", "CP", "RTT", "M", "AT/MP", "EV"];
     for (let c of p1) b1.innerHTML += `<tr><td><strong>${c}</strong></td><td>${allCodes[c]}</td><td id="count-${c}">0</td></tr>`;
@@ -142,14 +124,13 @@ function updateRecap() {
 }
 
 function autoRemplir() {
-    const year = parseInt(globalConfig.year); const month = parseInt(globalConfig.month);
-    const holidays = getHolidays(year);
+    const year = parseInt(globalConfig.year), month = parseInt(globalConfig.month), holidays = getHolidays(year);
     document.querySelectorAll('.code-select').forEach(select => {
         const day = parseInt(select.getAttribute('data-day'));
         const dateKey = `${year}${String(month + 1).padStart(2, '0')}${String(day).padStart(2, '0')}`;
         if (holidays.includes(dateKey)) return;
-        const dayOfWeek = new Date(year, month, day).getDay();
-        if (dayOfWeek >= 1 && dayOfWeek <= 5) { select.value = "P"; handleUpdate(globalConfig.type, day, 0); }
+        const dW = new Date(year, month, day).getDay();
+        if (dW >= 1 && dW <= 5) { select.value = "P"; handleUpdate(globalConfig.type, day, 0); }
     });
     for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
@@ -179,8 +160,7 @@ function initSignature(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
     const getPos = (e) => {
-        const rect = canvas.getBoundingClientRect(); const cx = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-        const cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        const rect = canvas.getBoundingClientRect(), cx = e.clientX || (e.touches ? e.touches[0].clientX : 0), cy = e.clientY || (e.touches ? e.touches[0].clientY : 0);
         return { x: (cx - rect.left) * (canvas.width / rect.width), y: (cy - rect.top) * (canvas.height / rect.height) };
     };
     canvas.addEventListener('mousedown', (e) => { paint = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
