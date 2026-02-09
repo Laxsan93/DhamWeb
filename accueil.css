@@ -3,7 +3,7 @@ body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color
 .welcome-sidebar { flex: 1; background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); color: white; display: flex; align-items: center; justify-content: center; padding: 60px; }
 .sidebar-content { max-width: 400px; }
 .logo-wrapper { background: white; padding: 12px; border-radius: 18px; display: inline-block; margin-bottom: 30px; }
-.side-logo { width: 130px; }
+.side-logo { width: 300px; }
 .sidebar-content h1 { font-size: 3rem; margin: 0; }
 .status-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 10px 20px; border-radius: 50px; margin-top: 40px; }
 .config-panel { flex: 1.5; display: flex; align-items: center; justify-content: center; padding: 20px; }
