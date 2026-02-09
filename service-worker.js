@@ -1,6 +1,5 @@
-// MODIFIE UNIQUEMENT CETTE LIGNE POUR METTRE À JOUR TOUT LE SITE
-const CACHE_NAME = 'etf-v4.1'; 
 
+const CACHE_NAME = 'etf-v4.2'; 
 const ASSETS = [
   'index.html',
   'accueil.css',

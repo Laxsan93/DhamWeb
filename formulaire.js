@@ -124,19 +124,6 @@ function restaurerDonnees(data) {
     for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
 
-async function partagerJson() {
-    const vals = {}; document.querySelectorAll('input, select, textarea, [id^="v-"], [id^="e-"]').forEach(el => { if(el.id) vals[el.id] = (el.tagName === 'TD') ? el.innerText : el.value; });
-    const data = { config: globalConfig, values: vals, sigSalarie: document.getElementById('canvas-emp').toDataURL(), nav: { yes: document.getElementById('nav-yes').checked, h: document.getElementById('nav-hebdo').checked, m: document.getElementById('nav-mens').checked, a: document.getElementById('nav-ann').checked } };
-    const jsonStr = JSON.stringify(data);
-    const fileName = `Rapport_${months[globalConfig.month]}_${globalConfig.year}.json`;
-    if (navigator.share) {
-        try {
-            const file = new File([jsonStr], fileName, { type: "application/json" });
-            await navigator.share({ files: [file], title: 'Mon Rapport ETF', text: 'Partage du rapport JSON.' });
-        } catch (err) { console.error(err); }
-    } else { alert("Partage non supporté."); }
-}
-
 function initSignature(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     ctx.lineWidth = 2; ctx.lineCap = 'round'; let paint = false;
