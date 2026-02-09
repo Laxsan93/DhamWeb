@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETF Portail Activité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="accueil.css?v=3.9">
+    <link rel="stylesheet" href="accueil.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e40af">
     <link rel="apple-touch-icon" href="ETFlogo.png">
@@ -16,9 +16,8 @@
             <div class="sidebar-content">
                 <div class="logo-wrapper"><img src="ETFlogo.png" alt="ETF Logo" class="side-logo"></div>
                 <h1>Bonjour,</h1>
-                <p>Gérez vos rapports d'activité. v3.9 : DHAM modifiable et correction crop finale.</p>
-                <div class="status-badge"><i class="fa-solid fa-circle-check"></i> v3.9 Stable</div>
-            </div>
+                <p>Gérez vos rapports d'activité en toute simplicité.</p>
+                </div>
         </div>
         <div class="config-panel">
             <div class="config-card">
@@ -43,6 +42,12 @@
             </div>
         </div>
     </div>
-    <script src="accueil.js?v=3.9"></script>
+    <script src="accueil.js"></script>
+    <script>
+        // Enregistrement du Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
 </body>
 </html>

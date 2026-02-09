@@ -44,8 +44,6 @@ function renderCalendar(year, month, type) {
                 let id = currentDay;
                 rDate += `<td>${id}</td>`;
                 rCode += `<td><select class="code-select" id="c-${id}" data-day="${id}" onchange="handleUpdate('${type}', ${id}, ${w})"><option value=""></option>${Object.keys(allCodes).map(c=>`<option value="${c}">${c}</option>`).join('')}</select></td>`;
-                
-                // RESTAURATION INPUT DHAM MODIFIABLE
                 if (type === 'DHAM') {
                     rVal += `<td><input type="number" step="0.5" class="val-input" id="v-${id}" oninput="sumWeek(${w});updateRecap();"></td>`;
                 } else {
@@ -64,19 +62,10 @@ function handleUpdate(type, id, w) {
     const code = document.getElementById(`c-${id}`).value;
     const vCell = document.getElementById(`v-${id}`);
     if (!vCell) return;
-    
-    let v = 0;
-    if (code === "P" || code === "TT" || code === "JF") v = (type === 'DHAM' ? 7 : 1);
-    else if (code === "Demi P") v = (type === 'DHAM' ? 3.5 : 0.5);
-
-    // Gère les deux cas : Champ de saisie ou cellule texte
-    if (vCell.tagName === 'INPUT') vCell.value = v;
-    else vCell.innerText = v;
-    
+    let v = 0; if (code === "P" || code === "TT" || code === "JF") v = (type === 'DHAM' ? 7 : 1); else if (code === "Demi P") v = (type === 'DHAM' ? 3.5 : 0.5);
+    if (vCell.tagName === 'INPUT') vCell.value = v; else vCell.innerText = v;
     let e = (code === "P" || code === "TT") ? 1 : 0;
-    const eCell = document.getElementById(`e-${id}`);
-    if (eCell) eCell.innerText = e;
-    
+    const eCell = document.getElementById(`e-${id}`); if (eCell) eCell.innerText = e;
     sumWeek(w); updateRecap();
 }
 
@@ -86,9 +75,8 @@ function sumWeek(w) {
     let sv = 0, se = 0;
     tables[w].querySelectorAll(`[id^='v-']`).forEach(el => sv += parseFloat(el.value || el.innerText) || 0);
     tables[w].querySelectorAll(`[id^='e-']`).forEach(el => se += parseFloat(el.innerText) || 0);
-    const tv = document.getElementById(`tv-w${w}`);
-    const te = document.getElementById(`te-w${w}`);
-    if (tv) tv.innerText = sv; if (te) te.innerText = se;
+    if (document.getElementById(`tv-w${w}`)) document.getElementById(`tv-w${w}`).innerText = sv;
+    if (document.getElementById(`te-w${w}`)) document.getElementById(`te-w${w}`).innerText = se;
 }
 
 function initRecapTables() {
@@ -106,15 +94,14 @@ function updateRecap() {
         const el = document.getElementById(`count-${c}`); if(el) el.innerText = count;
     }
     let tr = 0; document.querySelectorAll(`[id^='e-']`).forEach(cell => tr += parseInt(cell.innerText) || 0);
-    const ctr = document.getElementById('count-TR'); if(ctr) ctr.innerText = tr;
+    if (document.getElementById('count-TR')) document.getElementById('count-TR').innerText = tr;
 }
 
 function autoRemplir() {
-    const year = parseInt(globalConfig.year); const month = parseInt(globalConfig.month);
     document.querySelectorAll('.code-select').forEach(select => {
-        const day = parseInt(select.getAttribute('data-day'));
-        const dayOfWeek = new Date(year, month, day).getDay();
-        if (dayOfWeek >= 1 && dayOfWeek <= 5) { select.value = "P"; handleUpdate(globalConfig.type, day, 0); }
+        const d = parseInt(select.getAttribute('data-day'));
+        const dayW = new Date(globalConfig.year, globalConfig.month, d).getDay();
+        if (dayW >= 1 && dayW <= 5) { select.value = "P"; handleUpdate(globalConfig.type, d, 0); }
     });
     for(let i=0; i<6; i++) sumWeek(i); updateRecap();
 }
