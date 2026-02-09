@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'etf-v4.2'; 
+const CACHE_NAME = 'etf-v4.3'; 
 const ASSETS = [
   'index.html',
   'accueil.css',
